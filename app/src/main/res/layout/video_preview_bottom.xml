@@ -1,0 +1,68 @@
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/preViewLayout"
+    android:layout_width="@dimen/_225sdp"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/room_bottom_layout"
+    android:layout_alignParentEnd="true"
+    android:layout_margin="@dimen/_10sdp"
+    android:background="@drawable/video_preview_bubble"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:keepScreenOn="true">
+
+        <com.appypie.video.app.ui.room.ParticipantPrimaryView
+            android:id="@+id/preViewBottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:identity="@string/you"
+            app:tviScaleType="balanced" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivCross"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_margin="@dimen/_5sdp"
+            app:srcCompat="@drawable/ic_cancel" />
+
+
+        <LinearLayout
+            android:id="@+id/preViewThumbBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/_5sdp"
+            android:divider="@drawable/participant_divider"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSwitchCameraPreview"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@drawable/flip_camera_preview" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnStartMyVideo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:text="@string/start_my_video" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

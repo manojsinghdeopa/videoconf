@@ -1,0 +1,90 @@
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/_10sdp"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/common_header_layout" />
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_weight="1"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_10sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:keepScreenOn="true">
+
+            <com.appypie.video.app.ui.room.ParticipantPrimaryView
+                android:id="@+id/preView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:identity="@string/you"
+                app:tviScaleType="balanced" />
+
+
+            <LinearLayout
+                android:id="@+id/preViewThumb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/_10sdp"
+                android:divider="@drawable/participant_divider"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_12sdp"
+                    android:gravity="start|center"
+                    android:text="@string/always_show_video_preview_dialog_when_joining_a_video_meeting"
+                    android:textColor="@color/whiteColor" />
+
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:checked="true"
+                    android:theme="@style/greenSwitch"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:id="@+id/switchVideoPreview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10sdp" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnJoinVideo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:text="@string/join_with_video" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnJoinWithoutVideo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/edittext_bg"
+        android:text="@string/join_without_video"
+        android:textColor="@color/blackLight" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

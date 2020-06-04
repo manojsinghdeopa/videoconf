@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/roomView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/room_fragment_header" />
+
+
+    <include layout="@layout/room_viewpager_layout" />
+
+
+    <include layout="@layout/room_fragment_bottom" />
+
+
+    <include layout="@layout/video_preview_bottom" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:visibility="gone"
+        android:id="@+id/ivSwitchCamera"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/_25sdp"
+        android:layout_marginBottom="@dimen/_100sdp"
+        android:alpha=".8"
+        android:background="@drawable/bg_oval"
+        android:padding="@dimen/_5sdp"
+        android:src="@drawable/switch_camera"
+        app:tint="@color/blueColor" />
+
+
+</RelativeLayout>

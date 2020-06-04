@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:background="@color/backgroundColor"
+        android:id="@+id/rvUpcomingMeetings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivNoMeetings"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_150sdp"
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/no_upcoming_meetings"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNoMeetings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="@string/no_upcoming_meeting"
+        android:visibility="gone" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

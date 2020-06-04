@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/_50sdp">
+
+
+    <include layout="@layout/common_toolbar" />
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/_10sdp">
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMeetingTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/muli_bold"
+                android:padding="@dimen/_5sdp"
+                android:text="Meeting Name" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/etMeetingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/muli_bold"
+                android:padding="@dimen/_5sdp"
+                android:text="03:45 PM - 03:55 PM "
+                android:textColor="@color/blueColor"
+                android:textSize="@dimen/_14sdp" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnStart"
+            android:layout_width="@dimen/_75sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:text="@string/start" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayoutStyleUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etMeetingId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:hint="@string/meeting_id"
+            android:imeOptions="actionNext"
+            android:inputType="textNoSuggestions"
+            android:padding="@dimen/_15sdp"
+            android:textColor="@color/blackColor"
+            android:textColorHint="@color/blueColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayoutStyleUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etMeetingDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:hint="@string/meeting_description"
+            android:imeOptions="actionNext"
+            android:inputType="textNoSuggestions"
+            android:padding="@dimen/_15sdp"
+            android:textColor="@color/blackColor"
+            android:textColorHint="@color/blueColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayoutStyleUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etWhen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:hint="@string/when"
+            android:imeOptions="actionNext"
+            android:inputType="textNoSuggestions"
+            android:padding="@dimen/_15sdp"
+            android:textColor="@color/blackColor"
+            android:textColorHint="@color/blueColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordLayout"
+        style="@style/TextInputLayoutStyleUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:hint="@string/password"
+            android:imeOptions="actionNext"
+            android:inputType="textNoSuggestions"
+            android:padding="@dimen/_15sdp"
+            android:textColor="@color/blackColor"
+            android:textColorHint="@color/blueColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyleUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etInvitationLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:clickable="false"
+                android:editable="false"
+                android:ellipsize="end"
+                android:focusable="false"
+                android:hint="@string/invitation_link"
+                android:imeOptions="actionNext"
+                android:inputType="textNoSuggestions"
+                android:lines="1"
+                android:padding="@dimen/_15sdp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/blueColor"
+                android:textColorHint="@color/blueColor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivCopy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_15sdp"
+            app:srcCompat="@drawable/ic_copy" />
+
+
+    </RelativeLayout>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvAddInvitee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/border_linear_oval"
+        android:drawableStart="@drawable/ic_add"
+        android:drawablePadding="@dimen/_2sdp"
+        android:fontFamily="@font/muli_bold"
+        android:gravity="center"
+        android:padding="@dimen/_5sdp"
+        android:text="@string/add_invitee"
+        android:textColor="@color/blueColor"
+        android:textSize="@dimen/_12sdp" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

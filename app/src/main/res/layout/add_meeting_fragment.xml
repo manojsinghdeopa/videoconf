@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/_50sdp">
+
+
+    <include layout="@layout/common_toolbar" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayoutStyleUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etMeetingTopic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/meeting_topic"
+            android:imeOptions="actionNext"
+            android:inputType="textNoSuggestions"
+            android:padding="@dimen/_15sdp"
+            android:textColor="@color/blueColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayoutStyleUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etMeetingDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/meeting_description"
+            android:imeOptions="actionNext"
+            android:inputType="textNoSuggestions"
+            android:padding="@dimen/_15sdp"
+            android:textColor="@color/blueColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayoutStyleUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:drawableEnd="@drawable/ic_date_range"
+            android:focusable="false"
+            android:hint="@string/date"
+            android:imeOptions="actionNext"
+            android:inputType="textNoSuggestions"
+            android:maxLines="1"
+            android:padding="@dimen/_15sdp"
+            android:textColor="@color/blueColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayoutStyleUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etStartingTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:drawableEnd="@drawable/arrow_down"
+            android:focusable="false"
+            android:hint="@string/starting_time"
+            android:imeOptions="actionNext"
+            android:inputType="textNoSuggestions"
+            android:maxLines="1"
+            android:padding="@dimen/_15sdp"
+            android:textColor="@color/blueColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayoutStyleUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:drawableEnd="@drawable/arrow_down"
+            android:focusable="false"
+            android:hint="@string/duration"
+            android:imeOptions="actionNext"
+            android:inputType="textNoSuggestions"
+            android:maxLines="1"
+            android:padding="@dimen/_15sdp"
+            android:textColor="@color/blueColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayoutStyleUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etTimeZone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:drawableEnd="@drawable/arrow_down"
+            android:focusable="false"
+            android:hint="@string/time_zone"
+            android:imeOptions="actionNext"
+            android:inputType="textNoSuggestions"
+            android:padding="@dimen/_15sdp"
+            android:textColor="@color/blueColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvAddInvitee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/border_linear_oval"
+        android:drawableStart="@drawable/ic_add"
+        android:drawablePadding="@dimen/_2sdp"
+        android:fontFamily="@font/muli_bold"
+        android:gravity="center"
+        android:padding="@dimen/_5sdp"
+        android:text="@string/add_invitee"
+        android:textColor="@color/blueColor"
+        android:textSize="@dimen/_12sdp"
+        android:visibility="gone" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayoutStyleUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etRepeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/arrow_down"
+            android:hint="@string/repeat"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:padding="@dimen/_15sdp"
+            android:textColor="@color/blueColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/border_oval"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPersonalMeetingId"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:padding="@dimen/_10sdp"
+            android:text="@string/use_personal_meeting_id" />
+
+
+        <Switch
+            android:id="@+id/switchMeetingId"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:checked="false" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/border_oval"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:gravity="start|center"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/required_missing_password" />
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etMeetingPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/meeting_password"
+                android:inputType="textNoSuggestions"
+                android:padding="@dimen/_10sdp"
+                android:visibility="gone" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <Switch
+            android:id="@+id/switchMeetingPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:checked="false" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+

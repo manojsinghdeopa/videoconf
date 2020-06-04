@@ -1,0 +1,26 @@
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_10sdp"
+    android:background="@color/backgroundColor"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="@dimen/_10sdp"
+        android:hint="@string/search"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvParticipantList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top|center"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:indeterminate="true"
+        android:scaleY="5"
+        android:theme="@style/progressBarAppColor"
+        android:visibility="gone" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginTop="@dimen/_35sdp"
+        android:src="@drawable/user_thumbnail_pic" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_15sdp"
+        android:fontFamily="@font/muli_bold"
+        android:text="User Name" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:visibility="gone"
+        android:id="@+id/tvUpdateProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/bg_oval"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        android:padding="@dimen/_15sdp"
+        android:text="@string/update_profile" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTermCondition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/bg_oval"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        android:padding="@dimen/_15sdp"
+        android:text="@string/terms_and_conditions" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPrivacyPolicy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/bg_oval"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        android:padding="@dimen/_15sdp"
+        android:text="@string/privacy_policy" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

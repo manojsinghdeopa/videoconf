@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#CDDAE5</color>
+    <color name="colorPrimaryDark">#b0bec5</color>
+    <color name="colorAccent">#2A72E5</color>
+    <color name="backgroundColor">#F1F5F8</color>
+
+    <color name="colorButtonText">#80fffffe</color>
+    <color name="hintText">#AAAAAA</color>
+    <color name="gray">#66000000</color>
+
+    <color name="blackLight">#1B222F</color>
+
+    <color name="iconColor">#6F7B94</color>
+
+
+
+    <color name="greenDark">#4CAF50</color>
+    <color name="green">#4DEA53</color>
+    <color name="blueColor">#2A72E5</color>
+    <color name="blackColor">#000000</color>
+    <color name="whiteColor">#FFFFFF</color>
+
+    <color name="inactiveColor">#E6E5ED</color>
+
+    <!-- Login Screen Colors -->
+    <color name="login_hint">#80ffffff</color>
+
+    <color name="lobbyColorPrimary">#757575</color>
+    <color name="lobbyColorPrimaryDark">#424242</color>
+    <color name="lobbyColorAccent">#9E9E9E</color>
+
+    <color name="lobbyToolbar">#66000000</color>
+    <color name="lobbyEditTextUnderline">#1fffffff</color>
+    <color name="lobbyHint">#80ffffff</color>
+    <color name="lobbyMediaControls">#CC9B9B9B</color>
+
+    <color name="joinLayoutTextColor">#ccffffff</color>
+    <color name="lobbyStatsDrawerBg">#CC000000</color>
+    <color name="colorFadedRed">#cc2b33</color>
+
+    <!-- RemoteParticipant view colors -->
+    <color name="participantBackground">#66000000</color>
+    <color name="participantSelectedBackground">#cc000000</color>
+    <color name="speech_bubble_user">#FFEB3B</color>
+</resources>

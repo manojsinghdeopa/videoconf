@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="1dp"
+    android:background="@color/whiteColor"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="@dimen/_10sdp">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMeetingName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Appypie Mobile"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMeetingID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Appypie Mobile"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_12sdp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Appypie Mobile"
+            android:textColor="@color/blueColor"
+            android:textSize="@dimen/_12sdp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvGlobalTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Appypie Mobile"
+            android:textColor="@color/blueColor"
+            android:textSize="@dimen/_10sdp" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnStartUpcoming"
+        android:layout_width="@dimen/_75sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:text="@string/start"
+        android:textColor="@color/blueColor" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+
+
+
+

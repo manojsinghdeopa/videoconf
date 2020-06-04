@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:gravity="center"
+        android:fontFamily="@font/muli_bold"
+        android:textSize="@dimen/_18sdp"
+        android:id="@+id/ivThumb"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_margin="@dimen/_10sdp"/>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Manoj Singh" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivAudioStatus"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:src="@drawable/audio_gray" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivVideoStatus"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:src="@drawable/video_on_gray" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+

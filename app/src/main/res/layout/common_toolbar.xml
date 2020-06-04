@@ -1,0 +1,73 @@
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/whiteColor"
+    android:orientation="vertical">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@color/whiteColor"
+        android:gravity="start|center"
+        android:orientation="horizontal">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/ic_back" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/muli_bold"
+            android:gravity="start|center" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/muli_bold"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:text="@string/save"
+            android:textColor="@color/blueColor"
+            android:visibility="gone" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivIcon1"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:padding="@dimen/_10sdp"
+            android:visibility="gone" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivIcon2"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:padding="@dimen/_10sdp"
+            android:visibility="gone" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:indeterminate="true"
+        android:scaleY="5"
+        android:theme="@style/progressBarAppColor"
+        android:visibility="gone" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
