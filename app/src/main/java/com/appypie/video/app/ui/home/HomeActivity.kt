@@ -6,9 +6,7 @@ import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
-import android.view.Window
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -24,7 +22,6 @@ import com.appypie.video.app.util.AppPrefs
 import com.appypie.video.app.util.CommonMethod
 import com.appypie.video.app.util.Constants.*
 import kotlinx.android.synthetic.main.activity_home.*
-import java.util.*
 import javax.inject.Inject
 
 
@@ -120,6 +117,7 @@ class HomeActivity : BaseActivity() {
             if (!permissionsGranted()) {
                 requestPermissions(arrayOf(
                         Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.MODIFY_AUDIO_SETTINGS,
                         Manifest.permission.CAMERA,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ),
@@ -136,9 +134,11 @@ class HomeActivity : BaseActivity() {
     private fun permissionsGranted(): Boolean {
         val resultCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
         val resultMic = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+        val resultModifyAudio = ContextCompat.checkSelfPermission(this, Manifest.permission.MODIFY_AUDIO_SETTINGS)
         val resultStorage = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         return (resultCamera == PackageManager.PERMISSION_GRANTED
                 && resultMic == PackageManager.PERMISSION_GRANTED
+                && resultModifyAudio == PackageManager.PERMISSION_GRANTED
                 && resultStorage == PackageManager.PERMISSION_GRANTED)
     }
 
@@ -147,9 +147,11 @@ class HomeActivity : BaseActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSIONS_REQUEST_CODE) {
             val recordAudioPermissionGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED
+            val modifyAudioPermissionGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED
             val cameraPermissionGranted = grantResults[1] == PackageManager.PERMISSION_GRANTED
             val writeExternalStoragePermissionGranted = grantResults[2] == PackageManager.PERMISSION_GRANTED
             val permissionsGranted = (recordAudioPermissionGranted
+                    && modifyAudioPermissionGranted
                     && cameraPermissionGranted
                     && writeExternalStoragePermissionGranted)
             if (permissionsGranted) {
@@ -171,11 +173,11 @@ class HomeActivity : BaseActivity() {
         builder.setPositiveButton(getString(R.string.yes)) { dialog: DialogInterface?, which: Int -> onExit() }
         builder.setNegativeButton(getString(R.string.no), null)
         val alertDialog = builder.create()
-       /* alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        val abc = Objects.requireNonNull(alertDialog.window)!!.attributes
-        abc.gravity = Gravity.BOTTOM or Gravity.END
-        abc.x = 50 //x position
-        abc.y = 100 //y position*/
+        /* alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+         val abc = Objects.requireNonNull(alertDialog.window)!!.attributes
+         abc.gravity = Gravity.BOTTOM or Gravity.END
+         abc.x = 50 //x position
+         abc.y = 100 //y position*/
         alertDialog.show()
     }
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/whiteColor"
     android:orientation="vertical">
 
 
@@ -10,16 +11,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/_10sdp"
-        android:text="@string/if_you_have_received_an_invitation_link_tap_on_the_link_to_join_the_meeting" />
+        android:text="@string/if_you_have_received_an_invitation_link_tap_on_the_link_to_join_the_meeting"
+        android:visibility="gone" />
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
         android:layout_margin="@dimen/_10sdp"
         android:background="@drawable/border_oval"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
 
         <androidx.appcompat.widget.AppCompatEditText

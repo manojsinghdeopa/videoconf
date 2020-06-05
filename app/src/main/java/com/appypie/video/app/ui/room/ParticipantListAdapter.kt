@@ -41,11 +41,18 @@ class ParticipantListAdapter(private var list: MutableList<Item>) : RecyclerView
         holder.textViewName.text = list[position].identity
 
 
-      /*  if (list[position].muted) {
-            holder.ivAudioStatus.setImageResource(R.drawable.audio_gray)
-        } else {
+        if (list[position].muted) {
             holder.ivAudioStatus.setImageResource(R.drawable.mute_red)
-        }*/
+        } else {
+            holder.ivAudioStatus.setImageResource(R.drawable.audio_gray)
+        }
+
+
+        if (list[position].video) {
+            holder.ivVideoStatus.setImageResource(R.drawable.video_off_red)
+        } else {
+            holder.ivVideoStatus.setImageResource(R.drawable.video_on_gray)
+        }
 
 
         val r = Random()

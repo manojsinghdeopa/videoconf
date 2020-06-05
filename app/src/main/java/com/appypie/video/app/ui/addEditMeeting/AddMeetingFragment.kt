@@ -20,6 +20,7 @@ import com.appypie.video.app.util.CommonMethod
 import com.appypie.video.app.util.CommonMethod.Companion.convertMinuteToHour
 import com.appypie.video.app.util.CommonMethod.Companion.displayOnlyDate
 import com.appypie.video.app.util.CommonMethod.Companion.getRandomString
+import com.appypie.video.app.util.CommonMethod.Companion.validateEditText
 import com.appypie.video.app.util.Constants.*
 import kotlinx.android.synthetic.main.add_meeting_fragment.*
 import kotlinx.android.synthetic.main.common_toolbar.*
@@ -184,7 +185,7 @@ class AddMeetingFragment : BaseFragment() {
         switchMeetingPassword.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 isMeetingPasswordEnable = "true"
-                etMeetingPassword.visibility = View.VISIBLE
+                meetingPasswordLayout.visibility = View.VISIBLE
 
                 if (etMeetingPassword.text.toString().isEmpty()) {
                     etMeetingPassword.setText(getRandomString(8))
@@ -192,7 +193,7 @@ class AddMeetingFragment : BaseFragment() {
 
             } else {
                 isMeetingPasswordEnable = "false"
-                etMeetingPassword.visibility = View.GONE
+                meetingPasswordLayout.visibility = View.GONE
             }
         }
 
@@ -221,7 +222,7 @@ class AddMeetingFragment : BaseFragment() {
 
             if (meetingData!!.passwordEnabled!!) {
                 switchMeetingPassword.isChecked = true
-                etMeetingPassword.visibility = View.VISIBLE
+                meetingPasswordLayout.visibility = View.VISIBLE
                 etMeetingPassword.setText(meetingData!!.meetingPassword.toString())
             }
 
@@ -236,21 +237,17 @@ class AddMeetingFragment : BaseFragment() {
     private fun isValidate(): Boolean {
 
         if (etMeetingTopic.text.toString().trim().isEmpty()) {
-            etMeetingTopic.requestFocus()
-            etMeetingTopic.error = getString(R.string.field_required)
+            validateEditText(etMeetingTopic, getString(R.string.field_required), meetingTopicLayout)
             return false
         } else if (etMeetingTopic.text.toString().trim().length == 1 && regex.matcher(etMeetingTopic.text.toString()).find()) {
-            etMeetingTopic.requestFocus()
-            etMeetingTopic.error = getString(R.string.invalid_meeting_name)
-            return false
-        } else if (etMeetingDescription.text.toString().trim().isEmpty()) {
-            etMeetingDescription.requestFocus()
-            etMeetingDescription.error = getString(R.string.field_required)
+            validateEditText(etMeetingTopic, getString(R.string.invalid_meeting_name), meetingTopicLayout)
             return false
         } else if (isMeetingPasswordEnable == "true") {
-            if (etMeetingPassword.text.toString().length < 8) {
-                etMeetingPassword.requestFocus()
-                etMeetingPassword.error = getString(R.string.password_validation)
+            if (etMeetingPassword.text.toString().isEmpty()) {
+                validateEditText(etMeetingPassword, getString(R.string.field_required), meetingPasswordLayout)
+                return false
+            } else if (etMeetingPassword.text.toString().length < 8) {
+                validateEditText(etMeetingPassword, getString(R.string.password_validation), meetingPasswordLayout)
                 return false
             }
         }

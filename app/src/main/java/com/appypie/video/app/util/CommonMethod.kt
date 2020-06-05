@@ -20,7 +20,9 @@ import android.os.Build
 import android.os.Handler
 import android.provider.MediaStore
 import android.provider.Settings
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.text.format.DateUtils
 import android.util.Base64
 import android.util.Log
@@ -28,6 +30,7 @@ import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -37,6 +40,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.appypie.video.app.R
 import com.appypie.video.app.util.Constants.RANDOM_ALLOWED_CHARACTERS
 import com.appypie.video.app.util.Constants.meetingData
+import com.google.android.material.textfield.TextInputLayout
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
@@ -60,6 +64,37 @@ class CommonMethod {
     }
 
     companion object {
+
+
+        fun validateEditText(editText: AppCompatEditText?, message: String, textInputLayout: TextInputLayout) {
+
+            editText!!.requestFocus()
+            textInputLayout.error = message
+
+            editText.setOnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    showError(textInputLayout, (v as EditText).text, message)
+                }
+            }
+
+
+            editText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    showError(textInputLayout, s, message)
+                }
+            })
+        }
+
+        fun showError(textInputLayout: TextInputLayout, s: Editable, message: String) {
+
+            if (!TextUtils.isEmpty(s)) {
+                textInputLayout.error = null
+            } else {
+                textInputLayout.error = message
+            }
+        }
 
 
         @SuppressLint("SetTextI18n")
@@ -1218,6 +1253,17 @@ class CommonMethod {
             for (i in 0 until sizeOfRandomString)
                 sb.append(RANDOM_ALLOWED_CHARACTERS[random.nextInt(RANDOM_ALLOWED_CHARACTERS.length)])
             return sb.toString()
+        }
+
+
+        private fun getDeviceName(context: Context) {
+            Log.e("Build.MANUFACTURER---", Build.MANUFACTURER)
+            val manufacturer = "xiaomi"
+            if (manufacturer == Build.MANUFACTURER) {
+                val emailIntent = Intent(Intent.ACTION_SEND)
+                emailIntent.type = "text/plain"
+                context.startActivity(emailIntent)
+            }
         }
 
 

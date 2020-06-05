@@ -70,13 +70,13 @@ public class MyRemoteParticipants {
     }
 
 
-    private void addOrUpdateThumb(String sid, String identity, VideoTrack newVideo,
-                                  boolean muted) {
+    private void addOrUpdateThumb(String sid, String identity, VideoTrack newVideo, boolean muted) {
 
         if (hasThumb(sid, null)) {
-            updateThumb(sid, null, newVideo);
+            updateThumb(sid, newVideo);
         } else {
-            addThumb(sid, identity, newVideo, muted, false);
+            boolean videoStatus = newVideo != null;
+            addThumb(sid, identity, newVideo, muted, videoStatus);
         }
     }
 
@@ -96,7 +96,6 @@ public class MyRemoteParticipants {
     }
 
     private void addThumb(String sid, String identity, VideoTrack videoTrack, boolean muted, boolean mirror) {
-
         Item item = new Item(sid, identity, videoTrack, muted, mirror);
         ParticipantView view = createThumb(item);
         thumbs.put(item, view);
@@ -104,10 +103,10 @@ public class MyRemoteParticipants {
     }
 
 
-    void updateThumb(String sid, VideoTrack oldVideo, VideoTrack newVideo) {
+    void updateThumb(String sid, VideoTrack newVideo) {
         Item target = findItem(sid);
         if (target != null) {
-            ParticipantView view = getThumb(sid, oldVideo);
+            ParticipantView view = getThumb(sid, null);
 
             removeRender(target.videoTrack, view);
 

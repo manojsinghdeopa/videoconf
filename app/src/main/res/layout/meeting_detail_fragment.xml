@@ -116,7 +116,6 @@
             android:focusable="false"
             android:hint="@string/when"
             android:imeOptions="actionNext"
-            android:inputType="textNoSuggestions"
             android:padding="@dimen/_15sdp"
             android:textColor="@color/blackColor"
             android:textColorHint="@color/blueColor" />

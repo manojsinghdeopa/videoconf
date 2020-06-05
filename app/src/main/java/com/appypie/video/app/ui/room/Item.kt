@@ -9,5 +9,5 @@ class Item internal constructor(
         var identity: String,
         /** RemoteParticipant audio state.  */
         var muted: Boolean,
-        /** Video track mirroring enabled/disabled.  */
-        var mirror: Boolean)
+        /** Video track enabled/disabled.  */
+        var video: Boolean)

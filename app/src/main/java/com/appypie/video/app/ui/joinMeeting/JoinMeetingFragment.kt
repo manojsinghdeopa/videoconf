@@ -10,6 +10,7 @@ import com.appypie.video.app.ViewModelFactory
 import com.appypie.video.app.base.BaseFragment
 import com.appypie.video.app.util.AppPrefs
 import com.appypie.video.app.util.CommonMethod
+import com.appypie.video.app.util.CommonMethod.Companion.validateEditText
 import com.appypie.video.app.util.Constants.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.common_header_layout.*
@@ -110,12 +111,10 @@ class JoinMeetingFragment(val activity_container: Int) : BaseFragment() {
             password = sheetView.etPasswordMeeting.text.toString()
             when {
                 password.isEmpty() -> {
-                    sheetView.etPasswordMeeting.error = getString(R.string.field_required)
-                    sheetView.etPasswordMeeting.requestFocus()
+                    validateEditText(sheetView.etPasswordMeeting, getString(R.string.field_required), sheetView.meetingPasswordInput)
                 }
                 password.length < 8 -> {
-                    sheetView.etPasswordMeeting.error = getString(R.string.invalid_password_text)
-                    sheetView.etPasswordMeeting.requestFocus()
+                    validateEditText(sheetView.etPasswordMeeting, getString(R.string.invalid_password_text), sheetView.meetingPasswordInput)
                 }
                 else -> {
                     callJoinMeeting()
@@ -128,23 +127,21 @@ class JoinMeetingFragment(val activity_container: Int) : BaseFragment() {
     private fun isValidate(): Boolean {
 
         if (etMeetingIdUrl.text!!.isEmpty()) {
-            etMeetingIdUrl.error = getString(R.string.meeting_id_validation)
-            etMeetingIdUrl.requestFocus()
+            validateEditText(etMeetingIdUrl, getString(R.string.meeting_id_validation), meetingIdInput)
             return false
         } else if (etName.text!!.isEmpty()) {
-            etName.error = getString(R.string.meeting_name_validation)
-            etName.requestFocus()
+            validateEditText(etName, getString(R.string.meeting_name_validation), meetingNameInput)
             return false
         } else if (etEmail.text!!.isNotEmpty()) {
             if (!CommonMethod.isValidEmaillId(etEmail.text.toString())) {
-                etEmail.error = getString(R.string.invalid_email)
-                etEmail.requestFocus()
+                validateEditText(etEmail, getString(R.string.invalid_email), meetingEmailInput)
                 return false
             }
         }
 
         return true
     }
+
 
     private fun observableViewModel() {
         viewModel!!.reponse.observe(viewLifecycleOwner, Observer { response: JoinMeetingResponse? ->

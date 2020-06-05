@@ -2,10 +2,10 @@ package com.appypie.video.app.ui.room
 
 import android.os.Bundle
 import android.view.View
-import com.twilio.video.RemoteParticipant
 import com.appypie.video.app.R
 import com.appypie.video.app.base.BaseFragment
 import com.appypie.video.app.util.ParticipantListener
+import com.twilio.video.RemoteParticipant
 import kotlinx.android.synthetic.main.participant_grid.*
 
 class ParticipantFragment(var roomFragment: RoomFragment) : BaseFragment(), ParticipantListener {
@@ -23,12 +23,14 @@ class ParticipantFragment(var roomFragment: RoomFragment) : BaseFragment(), Part
 
         myRemoteParticipants = MyRemoteParticipants(participantGrid, roomFragment)
 
-        roomFragment.setParticipantListener(this)
-
-
+        roomFragment.participantListener(this)
     }
 
     override fun controlParticipant(remoteParticipant: RemoteParticipant, isAdded: Boolean) {
+
+
+        if (tvNoParticipants.visibility == View.VISIBLE)
+            tvNoParticipants.visibility = View.GONE
 
         if (isAdded) {
             myRemoteParticipants.addOrUpdate(remoteParticipant)

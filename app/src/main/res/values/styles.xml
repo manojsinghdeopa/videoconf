@@ -124,6 +124,7 @@
 
         <!--<item name="android:textColorHint">@color/blueColor</item>-->
         <item name="textColor">@color/blackColor</item>
+        <item name="errorEnabled">true</item>
     </style>
 
 
@@ -132,6 +133,7 @@
         <!--<item name="boxStrokeWidth">2dp</item>-->
         <item name="android:textColorHint">@color/gray</item>
         <item name="textColor">@color/blackColor</item>
+        <item name="errorEnabled">true</item>
     </style>
 
     <style name="editText" parent="Widget.AppCompat.EditText">

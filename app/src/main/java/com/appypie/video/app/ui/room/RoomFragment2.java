@@ -12,7 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *//*
+
 
 package com.appypie.video.app.ui.room;
 
@@ -100,7 +101,7 @@ import static com.appypie.video.app.util.Constants.shouldMeetingRefresh;
 import static com.appypie.video.app.webservices.AuthServiceError.EXPIRED_PASSCODE_ERROR;
 import static com.twilio.video.Room.State.CONNECTED;
 
-public class RoomFragment extends BaseFragment implements VideoRoomInitializer, MyRemoteParticipants.ParticipantClickListener {
+public class RoomFragment2 extends BaseFragment implements VideoRoomInitializer, MyRemoteParticipants.ParticipantClickListener {
 
     @BindView(R.id.videoOnLayout)
     LinearLayoutCompat videoOnLayout;
@@ -172,7 +173,7 @@ public class RoomFragment extends BaseFragment implements VideoRoomInitializer, 
     private ViewGroup thumbnailLinearLayout;
     private TextView joinStatusTextView;
 
-    public RoomFragment roomFragment;
+    public RoomFragment2 roomFragment;
 
     public RoomViewModel roomViewModel;
 
@@ -505,9 +506,11 @@ public class RoomFragment extends BaseFragment implements VideoRoomInitializer, 
         }
     }
 
-    /**
+    */
+/**
      * Initialize local media and provide stub participant for primary view.
-     */
+     *//*
+
     private void setupLocalMediaTrack() {
         if (localAudioTrack == null && !isAudioMuted) {
             localAudioTrack = LocalAudioTrack.create(requireActivity(), true, MICROPHONE_TRACK_NAME);
@@ -712,12 +715,14 @@ public class RoomFragment extends BaseFragment implements VideoRoomInitializer, 
     }
 
 
-    /**
+    */
+/**
      * Render local video track.
      *
      * <p>NOTE: Stub participant is created in controller. Make sure to remove it when connected to
      * room.
-     */
+     *//*
+
     private void renderLocalParticipantStub() {
 
         if (cameraCapturer == null) return;
@@ -788,10 +793,12 @@ public class RoomFragment extends BaseFragment implements VideoRoomInitializer, 
         List<RemoteVideoTrackPublication> remoteVideoTrackPublications = remoteParticipant.getRemoteVideoTracks();
 
         if (remoteVideoTrackPublications.isEmpty()) {
-            /*
+            */
+/*
              * Add placeholder UI by passing null video track for a participant that is not
              * sharing any video tracks.
-             */
+             *//*
+
             participantListener.controlParticipant(remoteParticipant, true);
             addParticipantVideoTrack(remoteParticipant, muted, null, renderAsPrimary);
 
@@ -1062,9 +1069,11 @@ public class RoomFragment extends BaseFragment implements VideoRoomInitializer, 
 
     private void setVolumeControl(boolean setVolumeControl) {
         if (setVolumeControl) {
-            /*
+            */
+/*
              * Enable changing the volume using the up/down keys during a conversation
-             */
+             *//*
+
             requireActivity().setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
         } else {
             requireActivity().setVolumeControlStream(savedVolumeControlStream);
@@ -1104,11 +1113,13 @@ public class RoomFragment extends BaseFragment implements VideoRoomInitializer, 
                 : R.string.room_screen_token_retrieval_failure_message;
 
         Toast.makeText(requireActivity(), "" + errorMessage, Toast.LENGTH_SHORT).show();
-        /* new AlertDialog.Builder(requireActivity(), R.style.AppTheme_Dialog)
+        */
+/* new AlertDialog.Builder(requireActivity(), R.style.AppTheme_Dialog)
                 .setTitle(getString(R.string.room_screen_connection_failure_title))
                 .setMessage(getString(errorMessage))
                 .setNeutralButton("OK", null)
-                .show();*/
+                .show();*//*
+
     }
 
     @Override
@@ -1221,3 +1232,4 @@ public class RoomFragment extends BaseFragment implements VideoRoomInitializer, 
         }
     }
 }
+*/

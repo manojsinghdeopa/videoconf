@@ -10,6 +10,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/meetingTopicLayout"
         style="@style/TextInputLayoutStyleUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -119,7 +120,8 @@
         style="@style/TextInputLayoutStyleUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp">
+        android:layout_margin="@dimen/_10sdp"
+        android:visibility="visible">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etTimeZone"
@@ -232,14 +234,24 @@
                 android:text="@string/required_missing_password" />
 
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/etMeetingPassword"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/meetingPasswordLayout"
+                android:visibility="gone"
+                style="@style/TextInputLayoutStyleUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/meeting_password"
-                android:inputType="textNoSuggestions"
-                android:padding="@dimen/_10sdp"
-                android:visibility="gone" />
+                android:layout_margin="@dimen/_5sdp">
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etMeetingPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/meeting_password"
+                    android:inputType="textNoSuggestions"
+                    android:padding="@dimen/_10sdp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>

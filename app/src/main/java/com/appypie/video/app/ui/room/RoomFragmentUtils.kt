@@ -17,6 +17,7 @@ import com.appypie.video.app.R
 import com.appypie.video.app.ui.home.VideoRoomFragment
 import com.appypie.video.app.ui.home.VideoRoomInitializer
 import com.appypie.video.app.util.*
+import com.appypie.video.app.util.Constants.meetingData
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.twilio.video.CameraCapturer
 import com.twilio.video.LocalVideoTrack
@@ -145,12 +146,17 @@ internal class RoomFragmentUtils() {
         bottomSheetDialog.setContentView(sheetView)
         bottomSheetDialog.show()
 
-        sheetView.tvMeetingId.text = AppPrefs.getString(Constants.MEETING_ID)
-        sheetView.tvPassword.text = AppPrefs.getString(Constants.PASSWORD_MD)
-        sheetView.tvHostName.text = AppPrefs.getString(Constants.MEETING_HOST_NAME)
-        sheetView.tvLink.text = AppPrefs.getString(Constants.MEETING_LINK)
-        sheetView.tvParticipantId.text = AppPrefs.getString(Constants.USER_ID)
+        sheetView.tv_meetingTopic.text = meetingData.topic
+        sheetView.tvMeetingId.text = meetingData.meetingId
+        sheetView.tvPassword.text = meetingData.meetingPassword.toString()
+        sheetView.tvHostName.text = meetingData.hostName
+        sheetView.tvLink.text = meetingData.meetingLink
+        sheetView.tvParticipantId.text = meetingData.id
 
+
+        if (meetingData.description!!.isNotEmpty()) {
+            sheetView.tvMeetingDescription.text = meetingData.description
+        }
 
         sheetView.tvLink.setOnClickListener {
             // CommonMethod.callBrowserIntent(activity.requireContext(), sheetView.tvLink.text.toString())
@@ -244,7 +250,7 @@ internal class RoomFragmentUtils() {
         dialog.rvParticipantList.adapter = adapter
 
 
-        dialog.tvTitle.text = "PARTICIPANTS"
+        dialog.tvTitle.text = "Participants(" + participantList.size + ")"
         dialog.ivBack.setOnClickListener {
             dialog.dismiss()
         }
@@ -273,7 +279,7 @@ internal class RoomFragmentUtils() {
     private fun getParticipantList(): MutableList<Item> {
         val names = mutableListOf<Item>()
 
-        val myItem = Item(activity.localParticipantSid, "You", false, false)
+        val myItem = Item(activity.localParticipantSid, "You", AppPrefs.getBoolean(Constants.AUDIO_MODE_OFF), AppPrefs.getBoolean(Constants.VIDEO_MODE_OFF))
 
         names.add(0, myItem)
         for ((key, value) in MyRemoteParticipants.thumbs) {

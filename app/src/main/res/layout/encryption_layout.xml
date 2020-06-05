@@ -8,6 +8,7 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_meetingTopic"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="Meeting Name"
@@ -16,6 +17,7 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMeetingDescription"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/_5sdp"
