@@ -6,8 +6,7 @@ import android.os.Build
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.Observer
 import com.appypie.video.app.ui.room.RoomEvent.RoomState
-import com.appypie.video.app.util.AppPrefs
-import com.appypie.video.app.util.Constants
+import com.appypie.video.app.util.Constants.meetingData
 import com.appypie.video.app.util.Constants.shouldBindRoom
 import com.twilio.video.Room.State.CONNECTED
 import com.twilio.video.Room.State.DISCONNECTED
@@ -68,7 +67,7 @@ class VideoService : LifecycleService() {
                 if (roomEvent is RoomState) {
                     if (room.state == CONNECTED) {
                         val roomNotification = RoomNotification(this@VideoService)
-                        startForeground(ONGOING_NOTIFICATION_ID, roomNotification.buildNotification(/*room.name*/AppPrefs.getString(Constants.MEETING_ID)))
+                        startForeground(ONGOING_NOTIFICATION_ID, roomNotification.buildNotification(/*room.name*/meetingData.meetingId.toString()))
                     } else if (room.state == DISCONNECTED)
                         stopSelf()
                 }

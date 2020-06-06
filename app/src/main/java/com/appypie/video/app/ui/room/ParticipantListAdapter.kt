@@ -13,11 +13,13 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class ParticipantListAdapter(private var list: MutableList<Item>) : RecyclerView.Adapter<ParticipantListAdapter.ViewHolder>() {
+class ParticipantListAdapter(var list: MutableList<Item>) : RecyclerView.Adapter<ParticipantListAdapter.ViewHolder>() {
 
-    internal var colors: MutableList<String> = ArrayList()
+    private var colors: MutableList<String> = ArrayList()
 
-    init {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.participant_list_adapter, parent, false)
+        participantListAdapter = this
         colors.add("#5E97F6")
         colors.add("#9CCC65")
         colors.add("#FF8A65")
@@ -30,10 +32,6 @@ class ParticipantListAdapter(private var list: MutableList<Item>) : RecyclerView
         colors.add("#4DD0E1")
         colors.add("#BA68C8")
         colors.add("#A1887F")
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.participant_list_adapter, parent, false)
         return ViewHolder(v)
     }
 
@@ -49,9 +47,9 @@ class ParticipantListAdapter(private var list: MutableList<Item>) : RecyclerView
 
 
         if (list[position].video) {
-            holder.ivVideoStatus.setImageResource(R.drawable.video_off_red)
-        } else {
             holder.ivVideoStatus.setImageResource(R.drawable.video_on_gray)
+        } else {
+            holder.ivVideoStatus.setImageResource(R.drawable.video_off_red)
         }
 
 
@@ -89,5 +87,10 @@ class ParticipantListAdapter(private var list: MutableList<Item>) : RecyclerView
         list = filterList
         notifyDataSetChanged()
     }
+
+    companion object {
+        var participantListAdapter: ParticipantListAdapter? = null
+    }
+
 
 }

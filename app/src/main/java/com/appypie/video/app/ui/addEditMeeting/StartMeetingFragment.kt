@@ -3,7 +3,6 @@ package com.appypie.video.app.ui.addEditMeeting
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -64,11 +63,6 @@ class StartMeetingFragment : BaseFragment() {
                     if (it.status == 200) {
 
                         AppPrefs.putString(TWILIO_TOKEN, it.token.toString())
-                        AppPrefs.putString(USER_ID, it.data!!.id.toString())
-                        AppPrefs.putString(MEETING_HOST_NAME, it.data!!.hostName.toString())
-                        AppPrefs.putString(MEETING_ID, it.data!!.meetingId.toString())
-                        AppPrefs.putString(MEETING_LINK, it.data!!.meetingLink.toString())
-                        AppPrefs.putString(PASSWORD_MD, it.data!!.meetingPassword.toString())
 
                         CURRENT_MEETING_ID = it.data!!.meetingId.toString()
                         CURRENT_MEETING_PASSWORD = it.data!!.meetingPassword.toString()
@@ -83,7 +77,7 @@ class StartMeetingFragment : BaseFragment() {
                             showPasswordSheet()
                         } else {
                             password = ""
-                            Toast.makeText(requireActivity(), "" + it.message.toString(), Toast.LENGTH_SHORT).show()
+                            CommonMethod.showToast(requireContext(), it.message.toString())
                         }
                     }
                 }

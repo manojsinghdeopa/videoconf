@@ -41,7 +41,6 @@ public class MyRemoteParticipants {
 
         List<RemoteVideoTrackPublication> remoteVideoTrackPublications = remoteParticipant.getRemoteVideoTracks();
 
-
         RemoteVideoTrack videoTrack = null;
 
         if (!remoteVideoTrackPublications.isEmpty()) {
@@ -54,25 +53,14 @@ public class MyRemoteParticipants {
 
 
     public void removeOrEmpty(@NotNull RemoteParticipant remoteParticipant) {
-
-
-        List<RemoteVideoTrackPublication> remoteVideoTrackPublications = remoteParticipant.getRemoteVideoTracks();
-
-        RemoteVideoTrack videoTrack = null;
-
-        if (!remoteVideoTrackPublications.isEmpty()) {
-            videoTrack = remoteVideoTrackPublications.get(0).getRemoteVideoTrack();
-        }
-
-
-        removeThumb(remoteParticipant.getSid(), videoTrack);
+        removeThumb(remoteParticipant.getSid());
 
     }
 
 
     private void addOrUpdateThumb(String sid, String identity, VideoTrack newVideo, boolean muted) {
 
-        if (hasThumb(sid, null)) {
+        if (hasThumb(sid)) {
             updateThumb(sid, newVideo);
         } else {
             boolean videoStatus = newVideo != null;
@@ -81,21 +69,21 @@ public class MyRemoteParticipants {
     }
 
 
-    private boolean hasThumb(String sid, VideoTrack videoTrack) {
-        return getThumb(sid, videoTrack) != null;
+    private boolean hasThumb(String sid) {
+        return getThumb(sid) != null;
     }
 
 
-    private ParticipantView getThumb(String sid, VideoTrack videoTrack) {
+    private ParticipantView getThumb(String sid) {
         for (Map.Entry<Item, ParticipantView> entry : thumbs.entrySet()) {
-            if (entry.getKey() != null && entry.getKey().sid.equals(sid) /*&& entry.getKey().videoTrack == videoTrack*/) {
+            if (entry.getKey() != null && entry.getKey().sid.equals(sid)) {
                 return entry.getValue();
             }
         }
         return null;
     }
 
-    private void addThumb(String sid, String identity, VideoTrack videoTrack, boolean muted, boolean mirror) {
+    public void addThumb(String sid, String identity, VideoTrack videoTrack, boolean muted, boolean mirror) {
         Item item = new Item(sid, identity, videoTrack, muted, mirror);
         ParticipantView view = createThumb(item);
         thumbs.put(item, view);
@@ -106,7 +94,7 @@ public class MyRemoteParticipants {
     void updateThumb(String sid, VideoTrack newVideo) {
         Item target = findItem(sid);
         if (target != null) {
-            ParticipantView view = getThumb(sid, null);
+            ParticipantView view = getThumb(sid);
 
             removeRender(target.videoTrack, view);
 
@@ -212,10 +200,10 @@ public class MyRemoteParticipants {
         return views;
     }
 
-    private void removeThumb(String sid, VideoTrack videoTrack) {
+    private void removeThumb(String sid) {
         Item target = findItem(sid);
         if (target != null) {
-            ParticipantView view = getThumb(sid, videoTrack);
+            ParticipantView view = getThumb(sid);
 
             removeRender(target.videoTrack, view);
 

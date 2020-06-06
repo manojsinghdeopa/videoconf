@@ -45,7 +45,8 @@ class UpcomingMeetingsAdapter(var list: MutableList<MeetingData>) : RecyclerView
         } else {
             tz.id = list[position].timeZone
             holder.itemView.tvGlobalTime.visibility = View.VISIBLE
-            holder.itemView.tvGlobalTime.text = convertDateToTime(list[position].serverStartDatetime.toString()) + " " + formatTimeZone(tz)
+            holder.itemView.tvGlobalTime.text = convertDateToTime(list[position].serverStartDatetime.toString())!!
+                    .replace("am", "AM").replace("pm", "PM") + " " + formatTimeZone(tz)
         }
 
         val startDate: String = list[position].serverStartTimestamp.toString()

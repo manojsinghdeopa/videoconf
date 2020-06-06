@@ -22,7 +22,7 @@ import com.appypie.video.app.base.BaseFragment
 import com.appypie.video.app.data.Preferences
 import com.appypie.video.app.ui.home.VideoRoomInitializer
 import com.appypie.video.app.ui.room.MyRemoteParticipants.ParticipantClickListener
-import com.appypie.video.app.ui.room.ParticipantView
+import com.appypie.video.app.ui.room.ParticipantListAdapter.Companion.participantListAdapter
 import com.appypie.video.app.ui.room.RoomEvent.*
 import com.appypie.video.app.ui.room.RoomViewEvent.*
 import com.appypie.video.app.ui.room.RoomViewModel.RoomViewModelFactory
@@ -361,7 +361,7 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
         }
     }
 
-    fun initializeRoom() {
+    private fun initializeRoom() {
         if (room != null) {
             localParticipant = room!!.localParticipant
             setupLocalMediaTrack()
@@ -417,7 +417,7 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
                     cameraVideoTrack,
                     localAudioTrack == null,
                     mirror)
-            participantController!!.getThumb(localParticipantSid, cameraVideoTrack).callOnClick()
+
 
             // add existing room participants thumbs
             var isFirstParticipant = true
@@ -612,10 +612,6 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
         val muted = remoteParticipant.remoteAudioTracks.size <= 0 || !remoteParticipant.remoteAudioTracks[0].isTrackEnabled
         val remoteVideoTrackPublications = remoteParticipant.remoteVideoTracks
         if (remoteVideoTrackPublications.isEmpty()) {
-            /*
-             * Add placeholder UI by passing null video track for a participant that is not
-             * sharing any video tracks.
-             */
             participantListener!!.controlParticipant(remoteParticipant, true)
             addParticipantVideoTrack(remoteParticipant, muted, null, renderAsPrimary)
         } else {
@@ -627,14 +623,18 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
     }
 
     private fun addParticipantVideoTrack(remoteParticipant: RemoteParticipant, muted: Boolean, remoteVideoTrack: RemoteVideoTrack?, renderAsPrimary: Boolean) {
+
+        val listener = RemoteParticipantListener()
+        remoteParticipant.setListener(listener)
+
         if (renderAsPrimary) {
             participantController!!.renderAsPrimary(remoteParticipant.sid, remoteParticipant.identity, remoteVideoTrack, muted, false)
         }
-        val listener = RemoteParticipantListener()
-        remoteParticipant.setListener(listener)
+
     }
 
     private inner class RemoteParticipantListener : RemoteParticipant.Listener {
+
         override fun onAudioTrackSubscribed(remoteParticipant: RemoteParticipant, remoteAudioTrackPublication: RemoteAudioTrackPublication, remoteAudioTrack: RemoteAudioTrack) {
             Timber.e(
                     "onAudioTrackSubscribed: remoteParticipant: %s, audio: %s, enabled: %b, subscribed: %b",
@@ -647,11 +647,11 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
                 // update audio state for primary view
                 participantController!!.primaryItem.muted = newAudioState
                 participantController!!.primaryView.setMuted(newAudioState)
-            } else {
-
-                // update thumbs with audio state
-                participantController!!.updateThumbs(remoteParticipant.sid, newAudioState)
             }
+
+            updateParticipantAudioStatus(remoteParticipant.sid, false)
+
+
         }
 
         override fun onAudioTrackUnsubscribed(remoteParticipant: RemoteParticipant, remoteAudioTrackPublication: RemoteAudioTrackPublication, remoteAudioTrack: RemoteAudioTrack) {
@@ -665,10 +665,10 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
                 // update audio state for primary view
                 participantController!!.primaryItem.muted = true
                 participantController!!.primaryView.setMuted(true)
-            } else {
-                // update thumbs with audio state
-                participantController!!.updateThumbs(remoteParticipant.sid, true)
             }
+
+            updateParticipantAudioStatus(remoteParticipant.sid, true)
+
         }
 
         override fun onVideoTrackSubscribed(remoteParticipant: RemoteParticipant, remoteVideoTrackPublication: RemoteVideoTrackPublication, remoteVideoTrack: RemoteVideoTrack) {
@@ -683,11 +683,13 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
                 // no thumb needed - render as primary
                 primary.videoTrack = remoteVideoTrack
                 participantController!!.renderAsPrimary(primary)
-            } else {
-                // not a primary remoteParticipant requires thumb
-                participantController!!.addOrUpdateThumb(remoteParticipant.sid, remoteParticipant.identity, null, remoteVideoTrack)
             }
+
             participantListener!!.controlParticipant(remoteParticipant, true)
+
+            updateParticipantVideoStatus(remoteParticipant.sid, true)
+
+
         }
 
         override fun onVideoTrackUnsubscribed(remoteParticipant: RemoteParticipant, remoteVideoTrackPublication: RemoteVideoTrackPublication, remoteVideoTrack: RemoteVideoTrack) {
@@ -713,10 +715,9 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
                     }
                 }
                 participantController!!.renderAsPrimary(primary)
-            } else {
-                // remove thumb or leave empty video thumb
-                participantController!!.removeOrEmptyThumb(remoteParticipant.sid, remoteParticipant.identity, remoteVideoTrack)
             }
+
+            updateParticipantVideoStatus(remoteParticipant.sid, false)
         }
 
         override fun onNetworkQualityLevelChanged(remoteParticipant: RemoteParticipant, networkQualityLevel: NetworkQualityLevel) {}
@@ -737,11 +738,34 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
         override fun onVideoTrackDisabled(remoteParticipant: RemoteParticipant, remoteVideoTrackPublication: RemoteVideoTrackPublication) {}
     }
 
+    private fun updateParticipantAudioStatus(sid: String, audioState: Boolean) {
+        try {
+            if (participantListAdapter == null) return
+            if (participantListAdapter!!.list.isEmpty()) return
+            participantListAdapter?.list?.find { it.sid == sid }?.muted = audioState
+            participantListAdapter?.notifyDataSetChanged()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
+    private fun updateParticipantVideoStatus(sid: String, videoState: Boolean) {
+        try {
+            if (participantListAdapter == null) return
+            if (participantListAdapter!!.list.isEmpty()) return
+            participantListAdapter?.list?.find { it.sid == sid }?.video = videoState
+            participantListAdapter?.notifyDataSetChanged()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     //toggleLocalVideoTrackState();
 
     //toggleLocalAudioTrackState();
     private val bottomLayout: Unit
-        private get() {
+        get() {
             ivMute!!.setOnClickListener { v: View? ->
                 //toggleLocalAudioTrackState();
                 if (tvMute!!.text.toString() == getString(R.string.join_audio)) {
@@ -849,7 +873,7 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
     }
 
     private val isNetworkQualityEnabled: Boolean
-        private get() = sharedPreferences!!.getBoolean(Preferences.ENABLE_NETWORK_QUALITY_LEVEL, Preferences.ENABLE_NETWORK_QUALITY_LEVEL_DEFAULT)
+        get() = sharedPreferences!!.getBoolean(Preferences.ENABLE_NETWORK_QUALITY_LEVEL, Preferences.ENABLE_NETWORK_QUALITY_LEVEL_DEFAULT)
 
     private fun obtainVideoConstraints() {
         val builder = VideoConstraints.Builder()
@@ -924,11 +948,12 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
         clearRoomInstance()
         AppPrefs.clearAllPref()
         Constants.shouldMeetingRefresh = true
+        MyRemoteParticipants.thumbs.clear()
         requireActivity().finish()
         showToast(requireContext(), message)
     }
 
-    fun clearRoomInstance() {
+    private fun clearRoomInstance() {
         try {
             Constants.shouldBindRoom = false
             roomManager!!.disconnect()

@@ -145,7 +145,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
     <string name="join_meeting">Join Meeting</string>
-    <string name="dash_board">DashBoard</string>
+    <string name="dash_board">Dashboard</string>
     <string name="scheduled">Scheduled Meeting</string>
     <string name="meeting_id_or_url">Meeting ID or URL</string>
     <string name="your_name">Your Name</string>
@@ -190,8 +190,8 @@
     <string name="upcoming_meetings">Upcoming Meetings</string>
     <string name="no_upcoming_meeting">No Meeting Found </string>
     <string name="meeting_description">Meeting Description</string>
-    <string name="date">Date</string>
-    <string name="time_zone">Time Zone</string>
+    <string name="date">Date*</string>
+    <string name="time_zone">Time Zone*</string>
     <string name="hours">Hours</string>
     <string name="minutes">Minutes</string>
     <string name="repeat">Repeat</string>
@@ -199,7 +199,7 @@
     <string name="required_missing_password">Required Meeting Password</string>
     <string name="meeting_password">Meeting Password</string>
     <string name="save">Save</string>
-    <string name="starting_time">Starting Time</string>
+    <string name="starting_time">Starting Time*</string>
     <string name="duration">Duration</string>
     <string name="done">Done</string>
     <string name="meeting_details">Meeting Details</string>
@@ -208,7 +208,7 @@
     <string name="invitation_link">Invitation Link</string>
     <string name="add_invitee">Add Invitee</string>
     <string name="password_validation">Your meeting password is too Short.</string>
-    <string name="meeting_topic">Meeting Topic</string>
+    <string name="meeting_topic">Meeting Topic*</string>
     <string name="update_profile">Update Profile</string>
     <string name="terms_and_conditions"><![CDATA[Terms & Conditions]]></string>
     <string name="privacy_policy">Privacy Policy</string>

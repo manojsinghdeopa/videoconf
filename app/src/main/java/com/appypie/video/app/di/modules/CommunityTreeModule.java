@@ -16,9 +16,9 @@
 
 package com.appypie.video.app.di.modules;
 
+import com.appypie.video.app.di.diUtils.ApplicationScope;
 import com.twilio.video.LogLevel;
 import com.twilio.video.Video;
-import com.appypie.video.app.di.diUtils.ApplicationScope;
 
 import dagger.Module;
 import dagger.Provides;

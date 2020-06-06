@@ -77,11 +77,6 @@ class HomeActivity : BaseActivity() {
 
                     if (response.status == 200) {
                         AppPrefs.putString(TWILIO_TOKEN, response.token.toString())
-                        AppPrefs.putString(USER_ID, response.data!!.id.toString())
-                        AppPrefs.putString(MEETING_HOST_NAME, response.data!!.hostName.toString())
-                        AppPrefs.putString(MEETING_ID, response.data!!.meetingId.toString())
-                        AppPrefs.putString(MEETING_LINK, response.data!!.meetingLink.toString())
-                        AppPrefs.putString(PASSWORD_MD, response.data!!.meetingPassword.toString())
 
                         CURRENT_MEETING_ID = response.data!!.meetingId.toString()
                         CURRENT_MEETING_PASSWORD = response.data!!.meetingPassword.toString()

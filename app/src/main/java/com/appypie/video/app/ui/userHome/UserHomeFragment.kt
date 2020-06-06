@@ -5,7 +5,6 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -153,11 +152,6 @@ class UserHomeFragment : BaseFragment() {
                     if (response.status == 200) {
 
                         AppPrefs.putString(TWILIO_TOKEN, response.token.toString())
-                        AppPrefs.putString(USER_ID, response.data!!.id.toString())
-                        AppPrefs.putString(MEETING_HOST_NAME, response.data!!.hostName.toString())
-                        AppPrefs.putString(MEETING_ID, response.data!!.meetingId.toString())
-                        AppPrefs.putString(MEETING_LINK, response.data!!.meetingLink.toString())
-                        AppPrefs.putString(PASSWORD_MD, response.data!!.meetingPassword.toString())
 
                         CURRENT_MEETING_ID = response.data!!.meetingId.toString()
                         CURRENT_MEETING_PASSWORD = response.data!!.meetingPassword.toString()
@@ -172,7 +166,7 @@ class UserHomeFragment : BaseFragment() {
                             showPasswordSheet()
                         } else {
                             password = ""
-                            Toast.makeText(requireActivity(), "" + response.message.toString(), Toast.LENGTH_SHORT).show()
+                            CommonMethod.showToast(requireContext(), response.message.toString())
                         }
                     }
                 }
@@ -202,12 +196,6 @@ class UserHomeFragment : BaseFragment() {
 
                     if (response.status == 200) {
                         AppPrefs.putString(TWILIO_TOKEN, response.token.toString())
-                        AppPrefs.putString(USER_ID, response.data!!.id.toString())
-                        AppPrefs.putString(MEETING_HOST_NAME, response.data!!.hostName.toString())
-                        AppPrefs.putString(MEETING_ID, response.data!!.meetingId.toString())
-                        AppPrefs.putString(MEETING_LINK, response.data!!.meetingLink.toString())
-                        AppPrefs.putString(PASSWORD_MD, response.data!!.meetingPassword.toString())
-
                         CURRENT_MEETING_ID = response.data!!.meetingId.toString()
                         CURRENT_MEETING_PASSWORD = response.data!!.meetingPassword.toString()
 
@@ -221,7 +209,7 @@ class UserHomeFragment : BaseFragment() {
                             showPasswordSheet()
                         } else {
                             password = ""
-                            Toast.makeText(requireActivity(), "" + response.message.toString(), Toast.LENGTH_SHORT).show()
+                            CommonMethod.showToast(requireContext(), response.message.toString())
                         }
                     }
                 }

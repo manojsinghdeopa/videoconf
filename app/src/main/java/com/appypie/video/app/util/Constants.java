@@ -61,12 +61,6 @@ public class Constants {
     public static final String AUTH_TOKEN_PASSWORD = "password";
 
 
-    public static final String USER_ID = "USER_ID";
-    public static final String MEETING_ID = "MEETING_ID";
-    public static final String MEETING_HOST_NAME = "MEETING_HOST_NAME";
-    public static final String MEETING_LINK = "MEETING_LINK";
-    public static final String PASSWORD_MD = "PASSWORD_MD";
-
     public static final String EAR_PIECE = "Earpiece";
     public static final String SPEAKER_PHONE = "Speakerphone";
 
@@ -108,7 +102,7 @@ public class Constants {
     public static String EMPTY = "EMPTY";
 
     public static Pattern regex = Pattern.compile("[$&+,:;=\\\\?@#|/'<>.^*()%!-]");
-    public static final String RANDOM_ALLOWED_CHARACTERS = "0123456789qwertyuiopasdfghjklzxcvbnm";
+    public static final String RANDOM_ALLOWED_CHARACTERS = "0123456789QWERTYabcfghUIOUPASDFkhshsdGHJKLZXCRxcbnxcmnBNM";
 
 
     public static MeetingData personalMeetingData = null;

@@ -279,7 +279,7 @@ internal class RoomFragmentUtils() {
     private fun getParticipantList(): MutableList<Item> {
         val names = mutableListOf<Item>()
 
-        val myItem = Item(activity.localParticipantSid, "You", AppPrefs.getBoolean(Constants.AUDIO_MODE_OFF), AppPrefs.getBoolean(Constants.VIDEO_MODE_OFF))
+        val myItem = Item(activity.localParticipantSid, "You", AppPrefs.getBoolean(Constants.AUDIO_MODE_OFF), !AppPrefs.getBoolean(Constants.VIDEO_MODE_OFF))
 
         names.add(0, myItem)
         for ((key, value) in MyRemoteParticipants.thumbs) {
