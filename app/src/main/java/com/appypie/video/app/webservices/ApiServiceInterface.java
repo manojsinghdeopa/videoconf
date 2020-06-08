@@ -147,6 +147,17 @@ public interface ApiServiceInterface {
                                                        @Field("custom_date") String custom_date,
                                                        @Field("zone") String zone);
 
+
+    @FormUrlEncoded
+    @POST("backend/api/meetings/meetingdashboardlist")
+    Single<MeetingDateListResponse> getDashboardMeetingList(@HeaderMap Map<String, String> headers,
+                                                            @Field("app_id") String app_id,
+                                                            @Field("host_id") String host_id,
+                                                            @Field("start_date") String start_date,
+                                                            @Field("end_date") String end_date,
+                                                            @Field("zone") String zone);
+
+
     @FormUrlEncoded
     @POST("backend/api/meetings/meetinglist")
     Single<MeetingListResponse> getMeetingList(@HeaderMap Map<String, String> headers,

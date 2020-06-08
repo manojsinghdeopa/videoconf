@@ -25,26 +25,31 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import androidx.annotation.AttrRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import butterknife.BindView;
+
+import com.appypie.video.app.R;
 import com.twilio.video.I420Frame;
 import com.twilio.video.VideoRenderer;
 import com.twilio.video.VideoScaleType;
 import com.twilio.video.VideoTextureView;
-import com.appypie.video.app.R;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import butterknife.BindView;
 
 abstract class ParticipantView extends FrameLayout implements VideoRenderer {
 
     String identity = "";
     int state = State.NO_VIDEO;
     boolean mirror = false;
+    boolean muted = false;
     int scaleType = VideoScaleType.ASPECT_BALANCED.ordinal();
 
     @BindView(R.id.participant_video_layout)
@@ -149,6 +154,7 @@ abstract class ParticipantView extends FrameLayout implements VideoRenderer {
     }
 
     public void setMuted(boolean muted) {
+        this.muted = muted;
         audioToggle.setVisibility(muted ? VISIBLE : GONE);
     }
 
@@ -168,9 +174,7 @@ abstract class ParticipantView extends FrameLayout implements VideoRenderer {
             identity = (identityResId != -1) ? context.getString(identityResId) : "";
 
             // obtain state
-            state =
-                    stylables.getInt(
-                            R.styleable.ParticipantView_state, ParticipantView.State.NO_VIDEO);
+            state = stylables.getInt(R.styleable.ParticipantView_state, ParticipantView.State.NO_VIDEO);
 
             // obtain mirror
             mirror = stylables.getBoolean(R.styleable.ParticipantView_mirror, false);
@@ -186,9 +190,9 @@ abstract class ParticipantView extends FrameLayout implements VideoRenderer {
     }
 
     @IntDef({
-        ParticipantView.State.VIDEO,
-        ParticipantView.State.NO_VIDEO,
-        ParticipantView.State.SELECTED
+            ParticipantView.State.VIDEO,
+            ParticipantView.State.NO_VIDEO,
+            ParticipantView.State.SELECTED
     })
     @Retention(RetentionPolicy.SOURCE)
     @interface State {

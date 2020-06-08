@@ -48,6 +48,27 @@ constructor(private val apiRepository: ApiRepository) : ViewModel() {
                 }))
     }
 
+
+    fun callDashboardList(headers: Map<String, String>, app_id: String?, host_id: String?, start_date: String?, end_date: String?, zone: String?) {
+        /* start_date:09/06/2020 00:00 AM
+           end_date:09/06/2020 11:59 PM */
+        loading.value = true
+        disposable!!.add(apiRepository.getDashboardMeetingList(headers, app_id, host_id, start_date, end_date, zone).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(object : DisposableSingleObserver<MeetingDateListResponse?>() {
+                    override fun onSuccess(meetingResponse: MeetingDateListResponse) {
+                        repoLoadError.value = false
+                        result.value = meetingResponse
+                        loading.value = false
+                    }
+
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
+                        repoLoadError.value = true
+                        loading.value = false
+                    }
+                }))
+    }
+
     override fun onCleared() {
         super.onCleared()
         if (disposable != null) {

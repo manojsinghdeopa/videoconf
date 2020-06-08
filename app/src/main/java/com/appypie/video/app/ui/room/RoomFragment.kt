@@ -9,11 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
-import android.widget.*
-import androidx.appcompat.widget.LinearLayoutCompat
+import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.appypie.video.app.R
@@ -35,72 +34,15 @@ import com.appypie.video.app.webservices.CommonResponse
 import com.twilio.audioswitch.selection.AudioDeviceSelector
 import com.twilio.video.*
 import kotlinx.android.synthetic.main.activity_room.*
+import kotlinx.android.synthetic.main.room_fragment_bottom.*
+import kotlinx.android.synthetic.main.room_fragment_header.*
+import kotlinx.android.synthetic.main.room_viewpager_layout.*
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
 
 class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickListener {
-
-    @JvmField
-    @BindView(R.id.videoOnLayout)
-    var videoOnLayout: LinearLayoutCompat? = null
-
-    @JvmField
-    @BindView(R.id.shareLayout)
-    var shareLayout: LinearLayoutCompat? = null
-
-    @JvmField
-    @BindView(R.id.participantLayout)
-    var participantLayout: LinearLayoutCompat? = null
-
-    @JvmField
-    @BindView(R.id.chatLayout)
-    var chatLayout: LinearLayoutCompat? = null
-
-    @JvmField
-    @BindView(R.id.tvMute)
-    var tvMute: TextView? = null
-
-    @JvmField
-    @BindView(R.id.ivMute)
-    var ivMute: ImageView? = null
-
-    @JvmField
-    @BindView(R.id.ivUpArrow)
-    var ivUpArrow: ImageView? = null
-
-    @JvmField
-    @BindView(R.id.tvVideoOn)
-    var tvVideoOn: TextView? = null
-
-    @JvmField
-    @BindView(R.id.ivVideoOn)
-    var ivVideoOn: ImageView? = null
-
-    @JvmField
-    @BindView(R.id.ivSpeaker)
-    var imgSpeaker: ImageView? = null
-
-    @JvmField
-    @BindView(R.id.roomView)
-    var roomView: RelativeLayout? = null
-
-    @JvmField
-    @BindView(R.id.encryptionView)
-    var encryptionView: LinearLayoutCompat? = null
-
-    @JvmField
-    @BindView(R.id.ivSwitchCamera)
-    var ivSwitchCamera: ImageView? = null
-
-    @JvmField
-    @BindView(R.id.pbEndMeeting)
-    var pbEndMeeting: ProgressBar? = null
-
-    @JvmField
-    @BindView(R.id.ivDisconnect)
-    var ivDisconnect: ImageView? = null
 
     @JvmField
     @Inject
@@ -346,7 +288,8 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
     }
 
     override fun onGridClick(item: MyRemoteParticipants.Item) {
-        participantController!!.renderAsPrimary(item.sid, item.identity, item.videoTrack, item.muted, item.mirror)
+        participantController!!.renderAsPrimary(item.sid, item.identity, item.videoTrack, /*item.muted*/false, item.mirror)
+        roomViewPager.setCurrentItem(0, true)
     }
 
     private fun onStartVideo() {
@@ -400,10 +343,10 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
 
             // newly added for remove my local thumb if already there..
             participantController!!.removeThumbs(localParticipantSid)
-
-
+            participantController!!.removeAllThumbs()
             // remove primary view
             participantController!!.removePrimary()
+
             var mirror = false
             if (cameraCapturer != null) {
                 mirror = cameraCapturer!!.cameraSource == CameraCapturer.CameraSource.FRONT_CAMERA
@@ -809,8 +752,8 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
             }
             participantLayout!!.setOnClickListener { v: View? -> RoomFragmentUtils(roomFragment!!).showParticipantList() }
             encryptionView!!.setOnClickListener { v: View? -> RoomFragmentUtils(roomFragment!!).showEncryptionLayout() }
-            imgSpeaker!!.tag = Constants.SPEAKER_PHONE
-            imgSpeaker!!.setOnClickListener { v: View? ->
+            ivSpeaker!!.tag = Constants.SPEAKER_PHONE
+            ivSpeaker!!.setOnClickListener { v: View? ->
                 val viewState = roomViewModel!!.audioViewState.value
                 val selectedDevice = viewState!!.selectedDevice
                 val audioDevices = viewState.availableAudioDevices
@@ -821,14 +764,14 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
                         audioDeviceNames.add(a.name)
                     }
                     var i = 0
-                    if (imgSpeaker!!.tag == Constants.EAR_PIECE) {
+                    if (ivSpeaker!!.tag == Constants.EAR_PIECE) {
                         i = audioDeviceNames.indexOf(Constants.SPEAKER_PHONE)
-                        imgSpeaker!!.tag = Constants.SPEAKER_PHONE
-                        imgSpeaker!!.setImageResource(R.drawable.speaker_on)
+                        ivSpeaker!!.tag = Constants.SPEAKER_PHONE
+                        ivSpeaker!!.setImageResource(R.drawable.speaker_on)
                     } else {
                         i = audioDeviceNames.indexOf(Constants.EAR_PIECE)
-                        imgSpeaker!!.tag = Constants.EAR_PIECE
-                        imgSpeaker!!.setImageResource(R.drawable.speaker_off)
+                        ivSpeaker!!.tag = Constants.EAR_PIECE
+                        ivSpeaker!!.setImageResource(R.drawable.speaker_off)
                     }
                     val viewEvent = SelectAudioDevice(audioDevices[i])
                     roomViewModel!!.processInput(viewEvent)

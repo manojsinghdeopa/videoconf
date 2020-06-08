@@ -17,14 +17,16 @@ import java.util.Map;
 public class MyRemoteParticipants {
 
 
-    private Item primaryItem;
-
     /**
      * Each participant thumb click listener.
      */
     private ParticipantClickListener listener;
 
     public static Map<Item, ParticipantView> thumbs = new HashMap<>();
+
+
+    public static Map<String, com.appypie.video.app.ui.room.Item> participantList = new HashMap<>();
+
     private ViewGroup thumbsViewContainer;
 
 
@@ -83,7 +85,7 @@ public class MyRemoteParticipants {
         return null;
     }
 
-    public void addThumb(String sid, String identity, VideoTrack videoTrack, boolean muted, boolean mirror) {
+    private void addThumb(String sid, String identity, VideoTrack videoTrack, boolean muted, boolean mirror) {
         Item item = new Item(sid, identity, videoTrack, muted, mirror);
         ParticipantView view = createThumb(item);
         thumbs.put(item, view);

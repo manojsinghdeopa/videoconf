@@ -283,7 +283,12 @@ internal class RoomFragmentUtils() {
 
         names.add(0, myItem)
         for ((key, value) in MyRemoteParticipants.thumbs) {
-            val item = Item(key.sid, key.identity, key.muted, key.mirror)
+
+            val isMuted = value.muted
+            val videoStatus = value.state == ParticipantView.State.VIDEO
+
+            /*val item = Item(key.sid, key.identity, key.muted, key.mirror)*/
+            val item = Item(key.sid, key.identity, isMuted, videoStatus)
             names.add(item)
         }
         return names
@@ -312,9 +317,9 @@ internal class RoomFragmentUtils() {
         val alertDialog = builder.create()
         alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         val abc = Objects.requireNonNull(alertDialog.window)!!.attributes
-        abc.gravity = Gravity.TOP or Gravity.END;
-        abc.x = 50;   //x position
-        abc.y = 100;   //y position
+        abc.gravity = Gravity.TOP or Gravity.END
+        abc.x = 50   //x position
+        abc.y = 100   //y position
         alertDialog.show()
 
 

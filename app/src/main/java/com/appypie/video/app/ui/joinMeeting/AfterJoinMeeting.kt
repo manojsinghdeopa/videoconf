@@ -74,6 +74,7 @@ class AfterJoinMeeting(var activity_container: Int) : BaseFragment() {
         ivMicroPhone.setOnClickListener {
             isInternetAudioEnable = true
             CommonMethod.showToast(requireContext(), getString(R.string.internet_audio_enabled))
+            speechBubbleLayout.visibility = View.GONE
             // requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), PERMISSIONS_REQUEST_CODE)
         }
 

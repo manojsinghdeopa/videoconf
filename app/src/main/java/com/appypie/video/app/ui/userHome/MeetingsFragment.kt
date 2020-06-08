@@ -193,6 +193,15 @@ class MeetingsFragment : BaseFragment() {
 
     }
 
+    private fun hideTodayTomorrowView() {
+        tvTodayDate.visibility = View.GONE
+        tvTomorrowDate.visibility = View.GONE
+        rvTodayMeetings.visibility = View.GONE
+        rvTomorrowMeetings.visibility = View.GONE
+        rvTodayMeetings.adapter = null
+        rvTomorrowMeetings.adapter = null
+    }
+
 
     private fun addTodayTomorrowMeetingList(recyclerView: RecyclerView, list: MutableList<MeetingData>) {
 
@@ -324,6 +333,8 @@ class MeetingsFragment : BaseFragment() {
                     }
 
                     tvDate.text = CommonMethod.convertDate("$dayOfMonth/$month/$year")
+
+                    hideTodayTomorrowView()
 
                     getUpcomingMeetingList("$dayOfMonth/$month/$year")
 

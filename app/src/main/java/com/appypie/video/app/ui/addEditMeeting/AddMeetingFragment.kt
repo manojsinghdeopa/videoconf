@@ -33,8 +33,10 @@ import javax.inject.Inject
 class AddMeetingFragment : BaseFragment() {
 
     private var isMeetingPasswordEnable = "false"
-    var hour = 0
-    var minute = 30
+    var hour = 1
+    var minute = 0
+    val currentDate = displayOnlyDate()
+    var currTime = ""
 
     var tzIdList = mutableListOf<TimeZoneModel>()
 
@@ -130,12 +132,13 @@ class AddMeetingFragment : BaseFragment() {
         val mHour = c.get(Calendar.HOUR_OF_DAY)
         val mMinute = c.get(Calendar.MINUTE)
 
-        updateTime(mHour, mMinute)
+        currTime = getTime(mHour, mMinute)
 
+        etStartingTime.setText(currTime)
 
-        etDate.setText(displayOnlyDate())
+        etDate.setText(currentDate)
 
-        etDuration.setText("$hour Hour $minute Minutes ")
+        etDuration.setText("$hour Hour")
 
         etDate.setOnClickListener {
             CommonMethod.showDatePickerEditText(requireActivity(), etDate)
@@ -258,7 +261,30 @@ class AddMeetingFragment : BaseFragment() {
 
         val timePickerDialog = TimePickerDialog(requireActivity(), R.style.DatePickerDialogThemes,
                 OnTimeSetListener { view, hourOfDay, minuteOfHour ->
-                    updateTime(hourOfDay, minuteOfHour)
+
+
+                    if (currentDate == etDate.text.toString()) {
+
+                        val datetime = Calendar.getInstance()
+                        val c = Calendar.getInstance()
+                        datetime[Calendar.HOUR_OF_DAY] = hourOfDay
+                        datetime[Calendar.MINUTE] = minuteOfHour
+
+                        if (datetime.timeInMillis >= c.timeInMillis) {
+                            etStartingTime.setText(getTime(hourOfDay, minuteOfHour))
+                        } else {
+
+                            val c1 = Calendar.getInstance()
+                            val mHour = c1.get(Calendar.HOUR_OF_DAY)
+                            val mMinute = c1.get(Calendar.MINUTE)
+
+                            etStartingTime.setText(getTime(mHour, mMinute))
+
+                        }
+                    } else {
+                        etStartingTime.setText(getTime(hourOfDay, minuteOfHour))
+                    }
+
 
                 }, hour, minute, false)
         timePickerDialog.show()
@@ -299,8 +325,7 @@ class AddMeetingFragment : BaseFragment() {
         return CommonMethod.formatTimeZone(tz)
     }
 
-
-    private fun updateTime(hour: Int, mins: Int) {
+    private fun getTime(hour: Int, mins: Int): String {
         var hours = hour
         var timeSet = ""
         when {
@@ -323,8 +348,7 @@ class AddMeetingFragment : BaseFragment() {
 
         val minutes = if (minuteRounded < 10) "0$minuteRounded" else minuteRounded.toString()
 
-        val aTime = StringBuilder().append(hours).append(':').append(minutes).append(" ").append(timeSet).toString()
-        etStartingTime.setText(aTime)
+        return StringBuilder().append(hours).append(':').append(minutes).append(" ").append(timeSet).toString()
     }
 
     private fun minuteRoundOff(minute: Int): Int {
@@ -392,7 +416,7 @@ class AddMeetingFragment : BaseFragment() {
 
     private fun showDurationListDialog() {
 
-        val minutes = mutableListOf("0", "10", "15", "20", "30", "40", "45", "50")
+        val minutes = mutableListOf("0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55")
 
         val hours = mutableListOf<String>()
         for (i in 0 until 25) {
@@ -426,7 +450,18 @@ class AddMeetingFragment : BaseFragment() {
 
         convertView.btnDone.setOnClickListener {
             dialog.dismiss()
-            etDuration.setText("$hour Hour $minute Minutes ")
+
+            when {
+                hour == 0 -> {
+                    etDuration.setText("$minute Minutes")
+                }
+                minute == 0 -> {
+                    etDuration.setText("$hour Hour")
+                }
+                else -> {
+                    etDuration.setText("$hour Hour $minute Minutes")
+                }
+            }
         }
 
     }

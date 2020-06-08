@@ -77,6 +77,14 @@ class ApiRepository @Inject constructor(private val repoService: ApiServiceInter
         return repoService.getMeetingDateList(headers, app_id, host_id, custom_date, zone)
     }
 
+
+    fun getDashboardMeetingList(headers: Map<String, String>,
+                                app_id: String?, host_id: String?,
+                                start_date: String?, end_date: String?,
+                                zone: String?): Single<MeetingDateListResponse> {
+        return repoService.getDashboardMeetingList(headers, app_id, host_id, start_date, end_date, zone)
+    }
+
     fun getMeetingList(headers: Map<String, String>,
                        app_id: String?, host_id: String?, time_zone: String?): Single<MeetingListResponse> {
         return repoService.getMeetingList(headers, app_id, host_id, time_zone)

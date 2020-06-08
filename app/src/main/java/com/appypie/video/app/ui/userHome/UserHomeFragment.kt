@@ -251,6 +251,7 @@ class UserHomeFragment : BaseFragment() {
     private fun requestData(date: String) {
         selectedDate = date
         viewModel!!.call(CommonMethod.getHeaderMap(), APP_ID, HOST_ID, date, TimeZone.getDefault().id)
+        // viewModel!!.callDashboardList(CommonMethod.getHeaderMap(), APP_ID, HOST_ID, "","", TimeZone.getDefault().id)
     }
 
 

@@ -182,7 +182,13 @@ class CommonMethod {
                         if ((monthOfYear + 1) < 10) {
                             month = "0" + (monthOfYear + 1)
                         }
-                        editText.setText("$dayOfMonth/$month/$year")
+
+                        var day = "" + dayOfMonth
+                        if (dayOfMonth < 10) {
+                            day = "0$dayOfMonth"
+                        }
+
+                        editText.setText("$day/$month/$year")
                     }, mYear, mMonth, mDay
             )
             datePickerDialog.show()
@@ -373,17 +379,13 @@ class CommonMethod {
         fun getCurrentDate(): String {
             val c = Calendar.getInstance().time
             val df = SimpleDateFormat("EEEE,dd MMM yyyy", Locale.getDefault())
-            val formattedDate = df.format(c)
-            return formattedDate
+            return df.format(c)
         }
 
         fun getCurrentDateWithoutDay(): String {
             val c = Calendar.getInstance().time
             val df = SimpleDateFormat(",dd MMM yyyy", Locale.getDefault())
-            val formattedDate = df.format(c)
-            return formattedDate
-
-
+            return df.format(c)
         }
 
 

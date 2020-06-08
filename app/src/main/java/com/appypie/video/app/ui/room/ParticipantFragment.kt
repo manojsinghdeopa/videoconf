@@ -28,14 +28,18 @@ class ParticipantFragment(var roomFragment: RoomFragment) : BaseFragment(), Part
 
     override fun controlParticipant(remoteParticipant: RemoteParticipant, isAdded: Boolean) {
 
-
-        if (tvNoParticipants.visibility == View.VISIBLE)
-            tvNoParticipants.visibility = View.GONE
-
         if (isAdded) {
             myRemoteParticipants.addOrUpdate(remoteParticipant)
         } else {
             myRemoteParticipants.removeOrEmpty(remoteParticipant)
+            MyRemoteParticipants.participantList.remove(remoteParticipant.sid)
+        }
+
+
+        if (MyRemoteParticipants.thumbs.isEmpty()) {
+            tvNoParticipants.visibility = View.VISIBLE
+        } else {
+            tvNoParticipants.visibility = View.GONE
         }
 
     }
