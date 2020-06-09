@@ -46,7 +46,7 @@ class MeetingsFragment : BaseFragment() {
 
     var selectedDate = ""
     var list = mutableListOf<MeetingData>()
-    lateinit var adapter: UpcomingMeetingsAdapter
+    var adapter: UpcomingMeetingsAdapter = UpcomingMeetingsAdapter(list)
 
 
     @JvmField
@@ -78,7 +78,7 @@ class MeetingsFragment : BaseFragment() {
 
         observeViewModel()
 
-        getMeetingList()
+        getTodayTomorrowList()
     }
 
 
@@ -88,14 +88,18 @@ class MeetingsFragment : BaseFragment() {
         if (shouldMeetingRefresh) {
             shouldMeetingRefresh = false
 
-            getUpcomingMeetingList(selectedDate)
-            getMeetingList()
+            if (rvTodayMeetings.visibility == View.VISIBLE) {
+                getTodayTomorrowList()
+            } else {
+                getMeetingList(selectedDate)
+            }
         }
 
     }
 
 
     private fun observeViewModel() {
+
 
         viewModel!!.response.observe(viewLifecycleOwner, Observer {
 
@@ -137,7 +141,7 @@ class MeetingsFragment : BaseFragment() {
                     if (it.status == 200) {
                         if (it.data!!.isNotEmpty()) {
                             updateView(true)
-                            adapter.updateList(it.data as MutableList<MeetingData>)
+                            adaptMeetingList(rvUpcomingMeetings, it.data as MutableList<MeetingData>)
                         } else {
                             updateView(false)
                         }
@@ -163,6 +167,20 @@ class MeetingsFragment : BaseFragment() {
         })
 
 
+        deleteMeetingViewModel!!.response.observe(viewLifecycleOwner, Observer {
+
+            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
+                if (it.status == 200) {
+                    if (rvTodayMeetings.visibility == View.VISIBLE) {
+                        getTodayTomorrowList()
+                    } else {
+                        getMeetingList(selectedDate)
+                    }
+                }
+            }
+        })
+
+
     }
 
 
@@ -179,14 +197,14 @@ class MeetingsFragment : BaseFragment() {
 
         if (data!!.today!!.isNotEmpty()) {
             tvTodayDate.text = "Today" + getCurrentDateWithoutDay()
-            addTodayTomorrowMeetingList(rvTodayMeetings, data.today as MutableList<MeetingData>)
+            adaptMeetingList(rvTodayMeetings, data.today as MutableList<MeetingData>)
         } else {
             tvTodayDate.text = "Today" + getCurrentDateWithoutDay() + "\n\n" + "No Meeting Found"
         }
 
         if (data.tomorrow!!.isNotEmpty()) {
             tvTomorrowDate.text = "Tomorrow" + getTomorrowDateWithoutDay()
-            addTodayTomorrowMeetingList(rvTomorrowMeetings, data.tomorrow as MutableList<MeetingData>)
+            adaptMeetingList(rvTomorrowMeetings, data.tomorrow as MutableList<MeetingData>)
         } else {
             tvTomorrowDate.text = "Tomorrow" + getTomorrowDateWithoutDay() + "\n\n" + "No Meeting Found"
         }
@@ -203,7 +221,7 @@ class MeetingsFragment : BaseFragment() {
     }
 
 
-    private fun addTodayTomorrowMeetingList(recyclerView: RecyclerView, list: MutableList<MeetingData>) {
+    private fun adaptMeetingList(recyclerView: RecyclerView, list: MutableList<MeetingData>) {
 
         val meetingList: MutableList<MeetingData> = list
         val adapter = UpcomingMeetingsAdapter(meetingList)
@@ -243,8 +261,6 @@ class MeetingsFragment : BaseFragment() {
                     builder.setPositiveButton(getString(R.string.yes)) { dialog: DialogInterface?, which: Int ->
                         deleteMeetingViewModel!!.call(CommonMethod.getHeaderMap(), APP_ID, HOST_ID, meetingList[position].meetingId)
                         dialog!!.dismiss()
-                        meetingList.remove(meetingList[position])
-                        adapter.updateList(meetingList)
                     }
                     builder.setNegativeButton(getString(R.string.no), null)
                     val alertDialog = builder.create()
@@ -277,10 +293,6 @@ class MeetingsFragment : BaseFragment() {
 
     private fun listeners() {
 
-        CommonMethod.setRecyclerView(requireContext(), rvUpcomingMeetings)
-        adapter = UpcomingMeetingsAdapter(list)
-        rvUpcomingMeetings.adapter = adapter
-
         tvMeetingTitle.text = PERSONAL_MEETING_NAME
         tvInvitationLink.text = PERSONAL_MEETING_LINK
         tvPersonalId.text = "Personal ID : $PERSONAL_MEETING_ID"
@@ -309,8 +321,8 @@ class MeetingsFragment : BaseFragment() {
         }
 
         ivRefresh.setOnClickListener {
-            getUpcomingMeetingList(selectedDate)
-            getMeetingList()
+            getMeetingList(selectedDate)
+            getTodayTomorrowList()
         }
 
 
@@ -336,7 +348,7 @@ class MeetingsFragment : BaseFragment() {
 
                     hideTodayTomorrowView()
 
-                    getUpcomingMeetingList("$dayOfMonth/$month/$year")
+                    getMeetingList("$dayOfMonth/$month/$year")
 
                 }, mYear, mMonth, mDay
         )
@@ -345,14 +357,14 @@ class MeetingsFragment : BaseFragment() {
     }
 
 
-    private fun getMeetingList() {
+    private fun getTodayTomorrowList() {
         viewModel!!.call(CommonMethod.getHeaderMap(), APP_ID, HOST_ID, TimeZone.getDefault().id)
 
     }
 
-    private fun getUpcomingMeetingList(date: String) {
-        if (date.isEmpty()) return
+    private fun getMeetingList(date: String) {
         selectedDate = date
+        if (date.isEmpty()) return
         upComingViewModel!!.call(CommonMethod.getHeaderMap(), APP_ID, HOST_ID, date, TimeZone.getDefault().id)
     }
 }

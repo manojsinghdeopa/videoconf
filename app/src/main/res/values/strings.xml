@@ -131,7 +131,6 @@
     <string name="screen_video_track">Screen Video Track</string>
     <string name="you"><!--You--></string>
     <string name="sign_in_with_existing_account">Sign in with Existing Account</string>
-    <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="recording_notice">Recording may be enabled for quality assurance.</string>
     <string name="audio_toggle">Audio toggle</string>
@@ -162,8 +161,8 @@
     <string name="call_using_internet_audio">Call using internet Audio</string>
     <string name="microphone_text">Your microphone is disabled. Tap to enable the audio</string>
     <string name="disconnect_audio_text">Long press to disconnect audio</string>
-    <string name="don_t_connect_to_audio">Don’t Connect to Audio</string>
-    <string name="turn_off_my_video">Turn off My Video</string>
+    <string name="don_t_connect_to_audio">Turn off Audio</string>
+    <string name="turn_off_my_video">Turn off Video</string>
     <string name="video_preview">Video Preview</string>
     <string name="always_show_video_preview_dialog_when_joining_a_video_meeting">Always show video preview dialog when joining a video meeting</string>
     <string name="join_with_video">Join With Video</string>
@@ -211,6 +210,7 @@
     <string name="meeting_topic">Meeting Topic*</string>
     <string name="update_profile">Update Profile</string>
     <string name="terms_and_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="invite_participants">Invite Participants</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="schedule">Schedule</string>
     <string name="select_date">Select Date</string>
@@ -231,15 +231,17 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="sure_to_close_text">Are you sure you want to close ?</string>
-    <string name="pmi_text">Your meeting will be started with your personal room if you switched on the above toggle</string>
-    <string name="pmi_text2">Your meeting will be started with your personal room.</string>
+    <string name="pmi_text">Turn on the toggle to start meeting with your Personal Meeting ID</string>
+    <string name="pmi_text2">Your meeting will start with your Personal Room ID</string>
     <string name="internet_audio_enabled">Internet Audio Enabled</string>
     <string name="join_audio">Join Audio</string>
-
 
     <string name="disconnect_audio_title">Disconnect Audio</string>
     <string name="disconnect_audio_message">Are you sure you want to disconnect audio ?</string>
     <string name="no_participants">No Participants</string>
+    <string name="copy_url">Copy URL</string>
+    <string name="message">Message</string>
+    <string name="email">Email</string>
 
 
     <string-array name="ice_trans_policy_array">

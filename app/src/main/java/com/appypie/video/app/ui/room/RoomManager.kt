@@ -6,8 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.appypie.video.app.data.Preferences
 import com.appypie.video.app.ui.room.RoomEvent.*
-import com.appypie.video.app.ui.room.VideoService.Companion.startService
-import com.appypie.video.app.ui.room.VideoService.Companion.stopService
 import com.appypie.video.app.util.AppPrefs
 import com.appypie.video.app.util.Constants
 import com.appypie.video.app.util.EnvUtil
@@ -144,7 +142,7 @@ class RoomManager(private val context: Context, private val sharedPreferences: S
         override fun onConnected(room: Room) {
             Timber.i("onConnected -> room sid: %s", room.sid)
 
-            startService(context)
+            // startService(context)
 
             // Reset the speakerphone
             mutableViewEvents.value = RoomState(room)
@@ -153,7 +151,7 @@ class RoomManager(private val context: Context, private val sharedPreferences: S
         override fun onDisconnected(room: Room, twilioException: TwilioException?) {
             Timber.e("Disconnected from room -> sid: %s, state: %s", room.sid, room.state)
 
-            stopService(context)
+            //stopService(context)
 
             mutableViewEvents.value = RoomState(room)
         }

@@ -5,10 +5,7 @@ import android.content.*
 import android.graphics.Color
 import android.media.AudioManager
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -25,15 +22,19 @@ import com.appypie.video.app.ui.room.ParticipantListAdapter.Companion.participan
 import com.appypie.video.app.ui.room.RoomEvent.*
 import com.appypie.video.app.ui.room.RoomViewEvent.*
 import com.appypie.video.app.ui.room.RoomViewModel.RoomViewModelFactory
-import com.appypie.video.app.util.*
+import com.appypie.video.app.util.AppPrefs
+import com.appypie.video.app.util.CameraCapturerCompat
 import com.appypie.video.app.util.CommonMethod.Companion.getHeaderMap
 import com.appypie.video.app.util.CommonMethod.Companion.showToast
+import com.appypie.video.app.util.Constants
 import com.appypie.video.app.util.Constants.isInternetAudioEnable
+import com.appypie.video.app.util.ParticipantListener
 import com.appypie.video.app.webservices.AuthServiceError
 import com.appypie.video.app.webservices.CommonResponse
 import com.twilio.audioswitch.selection.AudioDeviceSelector
 import com.twilio.video.*
 import kotlinx.android.synthetic.main.activity_room.*
+import kotlinx.android.synthetic.main.end_meeting_dialog.view.*
 import kotlinx.android.synthetic.main.room_fragment_bottom.*
 import kotlinx.android.synthetic.main.room_fragment_header.*
 import kotlinx.android.synthetic.main.room_viewpager_layout.*
@@ -88,22 +89,44 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
     }
 
     @OnClick(R.id.ivDisconnect)
-    fun disConnectAlert() {
-        val arrayList = ArrayList<String>()
+    fun showEndMeetingDialog() {
+
+        val builder = AlertDialog.Builder(requireContext(), R.style.transParentBgAlertDialog)
+        val viewGroup: ViewGroup = requireActivity().findViewById(android.R.id.content)
+        val dialogView: View = LayoutInflater.from(requireContext()).inflate(R.layout.end_meeting_dialog, viewGroup, false)
+        builder.setView(dialogView)
+        val alertDialog = builder.create()
+
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val abc = Objects.requireNonNull(alertDialog.window)!!.attributes
+        abc.gravity = Gravity.TOP or Gravity.END
+        abc.x = 25   //x position
+        abc.y = 75   //y position
+        alertDialog.show()
+
         if (Constants.APP_TYPE == Constants.USER) {
-            arrayList.add(getString(R.string.end_meeting_for_all))
+            dialogView.btnEnd.text = getString(R.string.end_meeting_for_all)
         } else {
-            arrayList.add(getString(R.string.leave_meeting))
+            dialogView.btnEnd.text = getString(R.string.leave_meeting)
         }
-        arrayList.add(getString(R.string.cancel))
-        RoomFragmentUtils(roomFragment!!).showListDialog(arrayList, ItemClickListener { pos: Int ->
-            if (arrayList[pos] == getString(R.string.leave_meeting)) {
+
+        dialogView.btnEnd.setOnClickListener {
+
+            alertDialog.dismiss()
+
+            if (Constants.APP_TYPE == Constants.USER) {
+                endMeetingViewModel!!.endMeeting(getHeaderMap(), Constants.APP_ID, Constants.HOST_ID, Constants.CURRENT_MEETING_ID)
+            } else {
                 endMeetingViewModel!!.leftMeeting(getHeaderMap(), Constants.APP_ID, Constants.CURRENT_USER_NAME, Constants.CURRENT_MEETING_ID)
             }
-            if (arrayList[pos] == getString(R.string.end_meeting_for_all)) {
-                endMeetingViewModel!!.endMeeting(getHeaderMap(), Constants.APP_ID, Constants.HOST_ID, Constants.CURRENT_MEETING_ID)
-            }
-        })
+
+        }
+
+        dialogView.btnCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+
     }
 
     @OnClick(R.id.ivSwitchCamera)

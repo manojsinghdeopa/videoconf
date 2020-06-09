@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/whiteColor"
     android:orientation="vertical">
 
 
@@ -15,51 +15,48 @@
         android:visibility="gone" />
 
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_margin="@dimen/_10sdp"
-        android:background="@drawable/border_oval"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etMeetingId"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:hint="@string/meeting_id"
-            android:padding="@dimen/_10sdp"
-            android:textColor="@color/blueColor" />
-
-        <ProgressBar
-            android:id="@+id/pbJoinMeeting"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:padding="@dimen/_5sdp"
-            android:visibility="gone" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvJoin"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="match_parent"
-            android:background="@drawable/border_half_oval"
-            android:gravity="center"
-            android:text="@string/join"
-            android:textColor="@color/whiteColor" />
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:background="@drawable/border_top_oval"
         android:orientation="vertical">
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_margin="@dimen/_10sdp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etMeetingId"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="@string/meeting_id"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/blueColor" />
+
+            <ProgressBar
+                android:id="@+id/pbJoinMeeting"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_5sdp"
+                android:visibility="gone" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvJoin"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="match_parent"
+                android:background="@drawable/border_half_oval"
+                android:gravity="center"
+                android:text="@string/join"
+                android:textColor="@color/whiteColor" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -138,6 +135,16 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </LinearLayout>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/border_top_oval"
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"

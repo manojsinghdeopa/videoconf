@@ -195,5 +195,9 @@
         <item name="android:background">@drawable/top_oval_bg_dialog</item>
     </style>
 
+    <style name="transParentBgAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 
 </resources>

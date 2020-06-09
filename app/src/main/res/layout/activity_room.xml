@@ -25,7 +25,7 @@
         android:layout_marginEnd="@dimen/_25sdp"
         android:layout_marginBottom="@dimen/_100sdp"
         android:alpha=".8"
-        android:background="@drawable/bg_oval"
+        android:background="@drawable/border_oval"
         android:padding="@dimen/_5sdp"
         android:src="@drawable/switch_camera"
         android:visibility="gone"

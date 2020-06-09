@@ -16,7 +16,6 @@ import com.appypie.video.app.ViewModelFactory
 import com.appypie.video.app.base.BaseActivity
 import com.appypie.video.app.ui.addEditMeeting.ResumeMeetingResponse
 import com.appypie.video.app.ui.room.RoomFragment
-import com.appypie.video.app.ui.room.VideoService
 import com.appypie.video.app.ui.userHome.ResumeMeetingViewModel
 import com.appypie.video.app.util.AppPrefs
 import com.appypie.video.app.util.CommonMethod
@@ -58,7 +57,7 @@ class HomeActivity : BaseActivity() {
             if (intent.extras != null) {
                 val isFromNotification = intent.extras!!.getBoolean("isFromNotification", false)
                 if (isFromNotification) {
-                    VideoService.stopService(this)
+                    // VideoService.stopService(this)
                     resumeMeetingViewModel = ViewModelProvider(this, viewModelFactory!!).get(ResumeMeetingViewModel::class.java)
                     observeViewModel()
                     resumeMeetingViewModel!!.call(CommonMethod.getHeaderMap(), APP_ID, CURRENT_USER_NAME, CURRENT_USER_EMAIL, CURRENT_MEETING_PASSWORD, CURRENT_MEETING_ID)
