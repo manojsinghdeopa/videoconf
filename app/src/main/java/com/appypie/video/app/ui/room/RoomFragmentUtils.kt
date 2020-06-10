@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager
 import com.appypie.video.app.R
 import com.appypie.video.app.ui.home.VideoRoomFragment
 import com.appypie.video.app.ui.home.VideoRoomInitializer
+import com.appypie.video.app.ui.room.RoomFragment.Companion.remoteParticipantsList
 import com.appypie.video.app.util.*
 import com.appypie.video.app.util.Constants.meetingData
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -195,6 +196,13 @@ internal class RoomFragmentUtils() {
             }
 
             override fun onPageSelected(position: Int) {
+
+                if (remoteParticipantsList.isEmpty()) {
+                    roomView.roomViewPager.setCurrentItem(0, false)
+                    return
+                }
+
+
                 for (i in 0 until dotscount) {
                     dots[i]!!.setImageDrawable(ContextCompat.getDrawable(activity.requireActivity(), R.drawable.non_active_dots))
                 }
@@ -278,19 +286,17 @@ internal class RoomFragmentUtils() {
 
     private fun getParticipantList(): MutableList<Item> {
         val names = mutableListOf<Item>()
-
         val myItem = Item(activity.localParticipantSid, "You", AppPrefs.getBoolean(Constants.AUDIO_MODE_OFF), !AppPrefs.getBoolean(Constants.VIDEO_MODE_OFF))
-
         names.add(0, myItem)
-        for ((key, value) in MyRemoteParticipants.thumbs) {
 
-            val isMuted = value.muted
-            val videoStatus = value.state == ParticipantView.State.VIDEO
-
-            /*val item = Item(key.sid, key.identity, key.muted, key.mirror)*/
-            val item = Item(key.sid, key.identity, isMuted, videoStatus)
+        remoteParticipantsList.forEach {
+            val muted = it.remoteAudioTracks.size <= 0 || !it.remoteAudioTracks[0].isTrackEnabled
+            val remoteVideoTrackPublications = it.remoteVideoTracks
+            val videoStatus = remoteVideoTrackPublications.isNotEmpty()
+            val item = Item(it.sid, it.identity, muted, videoStatus)
             names.add(item)
         }
+
         return names
     }
 

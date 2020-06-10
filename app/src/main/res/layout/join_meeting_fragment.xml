@@ -16,13 +16,16 @@
             android:id="@+id/beforeJoinLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/_5sdp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp"
+                android:layout_margin="@dimen/_5sdp"
                 android:gravity="center"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
                 android:text="@string/join_meeting_text" />
 
 
@@ -31,15 +34,15 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp">
+                android:layout_margin="@dimen/_5sdp">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:inputType="textNoSuggestions"
                     android:id="@+id/etMeetingIdUrl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/meeting_id_or_url"
                     android:imeOptions="actionNext"
+                    android:inputType="textNoSuggestions"
                     android:padding="@dimen/_15sdp"
                     android:textColor="@color/blueColor" />
 
@@ -51,15 +54,15 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp">
+                android:layout_margin="@dimen/_5sdp">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:inputType="textPersonName"
                     android:id="@+id/etName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/your_name"
                     android:imeOptions="actionNext"
+                    android:inputType="textPersonName"
                     android:padding="@dimen/_15sdp"
                     android:textColor="@color/blueColor" />
 
@@ -71,15 +74,15 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp">
+                android:layout_margin="@dimen/_5sdp">
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/etEmail"
-                    android:inputType="textEmailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email_id_optional"
                     android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
                     android:padding="@dimen/_15sdp"
                     android:textColor="@color/blueColor" />
 
@@ -90,9 +93,9 @@
                 android:id="@+id/btnJoin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:text="@string/join_meeting" />
 
 

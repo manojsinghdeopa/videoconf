@@ -574,7 +574,7 @@ class CommonMethod {
 
 
         fun setRecyclerView(context: Context, recyclerView: RecyclerView) {
-            recyclerView.setHasFixedSize(true)
+            //recyclerView.setHasFixedSize(true)
             val layoutManager = LinearLayoutManager(context)
             layoutManager.orientation = RecyclerView.VERTICAL
             recyclerView.layoutManager = layoutManager

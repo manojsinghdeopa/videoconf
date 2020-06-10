@@ -88,7 +88,7 @@ class UserHomeFragment : BaseFragment() {
             IsMeetingScheduled = false
         }
 
-        var text = getString(R.string.start_meeting)
+        var text = getString(R.string.new_meeting)
         var icon = R.drawable.join_meeting_img
 
         if (resumeMeeting) {

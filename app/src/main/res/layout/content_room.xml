@@ -14,23 +14,19 @@
         app:tviScaleType="balanced" />
 
 
-    <LinearLayout
-        android:clickable="false"
+    <androidx.cardview.widget.CardView
+        android:visibility="gone"
+        android:id="@+id/remote_video_thumbnails"
         android:layout_width="@dimen/_120sdp"
         android:layout_height="@dimen/_120sdp"
         android:layout_gravity="bottom|start"
-        android:layout_margin="8dp">
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:clickable="false"
+        android:scrollbars="none"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="@dimen/_5sdp" />
 
-        <LinearLayout
-            android:scrollbars="none"
-            android:clickable="false"
-            android:id="@+id/remote_video_thumbnails"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@drawable/participant_divider"
-            android:orientation="horizontal" />
-
-
-    </LinearLayout>
 
 </FrameLayout>

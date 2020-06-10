@@ -37,6 +37,7 @@ class AddMeetingFragment : BaseFragment() {
     var minute = 0
     val currentDate = displayOnlyDate()
     var currTime = ""
+    var duration = 0
 
     var tzIdList = mutableListOf<TimeZoneModel>()
 
@@ -152,12 +153,6 @@ class AddMeetingFragment : BaseFragment() {
 
             if (isValidate()) {
 
-                val duration = (hour * 60) + minute
-
-                if (duration < 1) {
-                    CommonMethod.showToast(requireContext(), "Please Add Meeting Duration")
-                    return@setOnClickListener
-                }
 
                 if (tvTitle.text.toString() == getString(R.string.schedule_meeting)) {
                     viewModel!!.call(CommonMethod.getHeaderMap(), APP_ID, etMeetingTopic.text.toString(),
@@ -238,12 +233,13 @@ class AddMeetingFragment : BaseFragment() {
 
 
     private fun isValidate(): Boolean {
-
         if (etMeetingTopic.text.toString().trim().isEmpty()) {
             validateEditText(etMeetingTopic, getString(R.string.field_required), meetingTopicLayout)
             return false
         } else if (etMeetingTopic.text.toString().trim().length == 1 && regex.matcher(etMeetingTopic.text.toString()).find()) {
             validateEditText(etMeetingTopic, getString(R.string.invalid_meeting_name), meetingTopicLayout)
+            return false
+        } else if (durationInputLayout.error != null) {
             return false
         } else if (isMeetingPasswordEnable == "true") {
             if (etMeetingPassword.text.toString().isEmpty()) {
@@ -261,7 +257,6 @@ class AddMeetingFragment : BaseFragment() {
 
         val timePickerDialog = TimePickerDialog(requireActivity(), R.style.DatePickerDialogThemes,
                 OnTimeSetListener { view, hourOfDay, minuteOfHour ->
-
 
                     if (currentDate == etDate.text.toString()) {
 
@@ -461,6 +456,13 @@ class AddMeetingFragment : BaseFragment() {
                 else -> {
                     etDuration.setText("$hour Hour $minute Minutes")
                 }
+            }
+
+            duration = (hour * 60) + minute
+            if (duration > 1) {
+                durationInputLayout.error = null
+            } else {
+                durationInputLayout.error = "Invalid Duration Hours"
             }
         }
 

@@ -159,6 +159,7 @@ class StartMeetingFragment : BaseFragment() {
 
 
         if (FROM == getString(R.string.dash_board)) {
+            tvTitle.text = getString(R.string.start_new_meeting)
             ivNotification.visibility = View.GONE
             pmiLayout.visibility = View.VISIBLE
             spaceView.text = getString(R.string.pmi_text)

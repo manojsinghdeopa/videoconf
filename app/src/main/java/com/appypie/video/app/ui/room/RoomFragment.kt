@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.*
 import android.graphics.Color
 import android.media.AudioManager
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
@@ -43,7 +44,7 @@ import java.util.*
 import javax.inject.Inject
 
 
-class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickListener {
+class RoomFragment : BaseFragment(), VideoRoomInitializer, ParticipantClickListener {
 
     @JvmField
     @Inject
@@ -88,6 +89,7 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
         }
     }
 
+
     @OnClick(R.id.ivDisconnect)
     fun showEndMeetingDialog() {
 
@@ -125,8 +127,6 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
         dialogView.btnCancel.setOnClickListener {
             alertDialog.dismiss()
         }
-
-
     }
 
     @OnClick(R.id.ivSwitchCamera)
@@ -260,9 +260,10 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
                     isInternetAudioEnable = false
                 }
                 if (roomEvent is ParticipantConnected) {
-                    val remoteParticipant = roomEvent.remoteParticipant
+                    /*val remoteParticipant = roomEvent.remoteParticipant
                     val renderAsPrimary = room!!.remoteParticipants.size == 1
-                    addParticipant(remoteParticipant, renderAsPrimary)
+                    addParticipant(remoteParticipant, renderAsPrimary)*/
+                    addParticipantViews()
                 }
                 if (roomEvent is ParticipantDisconnected) {
                     val remoteParticipant = roomEvent.remoteParticipant
@@ -375,31 +376,38 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
                 mirror = cameraCapturer!!.cameraSource == CameraCapturer.CameraSource.FRONT_CAMERA
             }
 
+            if (room!!.remoteParticipants.isEmpty()) {
+                participantController!!.thumbsViewContainer.visibility = View.GONE
+                participantController!!.renderAsPrimary(localParticipantSid, "You", cameraVideoTrack, localAudioTrack == null, mirror)
+            } else {
+                remoteParticipantsList = room!!.remoteParticipants
+                participantController!!.addThumb(
+                        localParticipantSid,
+                        "You",
+                        cameraVideoTrack,
+                        localAudioTrack == null,
+                        mirror)
 
-            // add local thumb and "click" on it to make primary
-            participantController!!.addThumb(
-                    localParticipantSid,
-                    "You",
-                    cameraVideoTrack,
-                    localAudioTrack == null,
-                    mirror)
-
-
-            // add existing room participants thumbs
-            var isFirstParticipant = true
-            for (remoteParticipant in room!!.remoteParticipants) {
-                addParticipant(remoteParticipant, isFirstParticipant)
-                isFirstParticipant = false
-                if (room!!.dominantSpeaker != null) {
-                    if (room!!.dominantSpeaker!!.sid == remoteParticipant.sid) {
-                        val videoTrack: VideoTrack? = if (remoteParticipant.remoteVideoTracks.size > 0) remoteParticipant.remoteVideoTracks[0].remoteVideoTrack else null
-                        if (videoTrack != null) {
-                            val participantView = participantController!!.getThumb(remoteParticipant.sid, videoTrack)
-                            participantController!!.setDominantSpeaker(participantView)
+                if (!isVideoMuted) {
+                    participantController!!.thumbsViewContainer.visibility = View.VISIBLE
+                }
+                // add existing room participants thumbs
+                var isFirstParticipant = true
+                for (remoteParticipant in room!!.remoteParticipants) {
+                    addParticipant(remoteParticipant, isFirstParticipant)
+                    isFirstParticipant = false
+                    if (room!!.dominantSpeaker != null) {
+                        if (room!!.dominantSpeaker!!.sid == remoteParticipant.sid) {
+                            val videoTrack: VideoTrack? = if (remoteParticipant.remoteVideoTracks.size > 0) remoteParticipant.remoteVideoTracks[0].remoteVideoTrack else null
+                            if (videoTrack != null) {
+                                val participantView = participantController!!.getThumb(remoteParticipant.sid, videoTrack)
+                                participantController!!.setDominantSpeaker(participantView)
+                            }
                         }
                     }
                 }
             }
+
         }
     }
 
@@ -507,12 +515,16 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
             tvVideoOn!!.text = getString(R.string.videoOff)
             ivVideoOn!!.setImageResource(R.drawable.video_on)
             ivSwitchCamera!!.visibility = View.VISIBLE
-            participantController!!.thumbsViewContainer.visibility = View.VISIBLE
+            if (remoteParticipantsList.isNotEmpty()) {
+                participantController!!.thumbsViewContainer.visibility = View.VISIBLE
+            }
         } else {
             tvVideoOn!!.text = getString(R.string.videoOn)
             ivVideoOn!!.setImageResource(R.drawable.video_off)
             ivSwitchCamera!!.visibility = View.GONE
-            participantController!!.thumbsViewContainer.visibility = View.GONE
+            if (remoteParticipantsList.isNotEmpty()) {
+                participantController!!.thumbsViewContainer.visibility = View.GONE
+            }
         }
     }
 
@@ -549,12 +561,10 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
             ivVideoOn!!.setImageResource(R.drawable.video_off)
             tvVideoOn!!.text = getString(R.string.videoOn)
             ivSwitchCamera!!.visibility = View.GONE
-            if (participantController != null) participantController!!.thumbsViewContainer.visibility = View.GONE
         } else {
             ivVideoOn!!.setImageResource(R.drawable.video_on)
             tvVideoOn!!.text = getString(R.string.videoOn)
             ivSwitchCamera!!.visibility = View.VISIBLE
-            if (participantController != null) participantController!!.thumbsViewContainer.visibility = View.VISIBLE
         }
         if (isAudioMuted) {
             tvMute!!.text = getString(R.string.unmute)
@@ -804,11 +814,25 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
 
     private fun audioEnable(b: Boolean) {
         isInternetAudioEnable = b
+        val audioFlag = if (b) 1 else 0
+        val ringerMode = if (b) AudioManager.RINGER_MODE_NORMAL else AudioManager.RINGER_MODE_SILENT
         val audioManager = requireActivity().getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
         audioManager.mode = AudioManager.MODE_CURRENT/*MODE_IN_CALL*/
         audioManager.isMicrophoneMute = !b
-    }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!audioManager.isVolumeFixed) {
+                // audioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL, 0, audioFlag)
+                // audioManager.ringerMode = ringerMode
+                audioManager.adjustVolume(AudioManager.ADJUST_MUTE, audioFlag)
+            } else {
+                showToast(requireContext(), "Device is Not Supporting Volume Control")
+            }
+        } else {
+            audioManager.setStreamMute(AudioManager.STREAM_SYSTEM, b)
+        }
+    }
 
     private fun showDisconnectAudioAlert() {
         val builder = AlertDialog.Builder(requireActivity(), R.style.AppTheme_Dialog)
@@ -915,6 +939,7 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
         AppPrefs.clearAllPref()
         Constants.shouldMeetingRefresh = true
         MyRemoteParticipants.thumbs.clear()
+        remoteParticipantsList.clear()
         requireActivity().finish()
         showToast(requireContext(), message)
     }
@@ -947,6 +972,7 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
     }
 
     private fun removeParticipant(remoteParticipant: RemoteParticipant) {
+        remoteParticipantsList.remove(remoteParticipant)
         participantController!!.removeThumbs(remoteParticipant.sid)
         participantListener!!.controlParticipant(remoteParticipant, false)
     }
@@ -977,5 +1003,6 @@ class RoomFragment() : BaseFragment(), VideoRoomInitializer, ParticipantClickLis
         private const val CAMERA_TRACK_NAME = "camera"
         private const val IS_AUDIO_MUTED = "IS_AUDIO_MUTED"
         private const val IS_VIDEO_MUTED = "IS_VIDEO_MUTED"
+        var remoteParticipantsList = mutableListOf<RemoteParticipant>()
     }
 }

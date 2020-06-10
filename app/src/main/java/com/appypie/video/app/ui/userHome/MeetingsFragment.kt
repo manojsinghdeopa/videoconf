@@ -221,9 +221,9 @@ class MeetingsFragment : BaseFragment() {
     }
 
 
-    private fun adaptMeetingList(recyclerView: RecyclerView, list: MutableList<MeetingData>) {
+    private fun adaptMeetingList(recyclerView: RecyclerView, meetingList: MutableList<MeetingData>) {
 
-        val meetingList: MutableList<MeetingData> = list
+
         val adapter = UpcomingMeetingsAdapter(meetingList)
         CommonMethod.setRecyclerView(requireContext(), recyclerView)
         recyclerView.adapter = adapter

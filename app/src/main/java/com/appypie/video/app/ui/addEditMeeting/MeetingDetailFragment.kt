@@ -60,10 +60,13 @@ class MeetingDetailFragment() : BaseFragment() {
 
         etMeetingId.setText(meetingData.meetingId.toString())
 
-        etMeetingDescription.setText(meetingData.description.toString())
+
+        if (meetingData.description!!.trim().isNotEmpty()) {
+            meetingDescriptionInput.visibility = View.VISIBLE
+            etMeetingDescription.setText(meetingData.description.toString())
+        }
 
         etInvitationLink.setText(meetingData.meetingLink.toString())
-
 
         val date = CommonMethod.convertDate(meetingData.startDate)
         val timeZone = CommonMethod.formatTimeZone(tz)
