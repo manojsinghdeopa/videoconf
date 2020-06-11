@@ -21,6 +21,7 @@ import com.appypie.video.app.ui.common.ContainerActivity
 import com.appypie.video.app.ui.userHome.DeleteMeetingViewModel
 import com.appypie.video.app.util.CommonMethod
 import com.appypie.video.app.util.CommonMethod.Companion.convertMinuteToHour
+import com.appypie.video.app.util.CommonMethod.Companion.isMeetingCompleted
 import com.appypie.video.app.util.Constants.*
 import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.meeting_detail_fragment.*
@@ -61,9 +62,9 @@ class MeetingDetailFragment() : BaseFragment() {
         etMeetingId.setText(meetingData.meetingId.toString())
 
 
-        if (meetingData.description!!.trim().isNotEmpty()) {
+        if (meetingData.description.trim().isNotEmpty()) {
             meetingDescriptionInput.visibility = View.VISIBLE
-            etMeetingDescription.setText(meetingData.description.toString())
+            etMeetingDescription.setText(meetingData.description)
         }
 
         etInvitationLink.setText(meetingData.meetingLink.toString())
@@ -79,6 +80,9 @@ class MeetingDetailFragment() : BaseFragment() {
             etPassword.setText(meetingData.meetingPassword.toString())
         }
 
+
+
+        if (isMeetingCompleted(meetingData.status.toString())) btnStart.visibility = View.GONE
         btnStart.setOnClickListener {
             SELECTED_MEETING_ID = meetingData.meetingId
             SELECTED_MEETING_LINK = meetingData.meetingLink
@@ -133,10 +137,14 @@ class MeetingDetailFragment() : BaseFragment() {
 
 
     private fun setHeader() {
-        ivIcon1.visibility = View.VISIBLE
-        ivIcon2.visibility = View.VISIBLE
-        ivIcon1.setImageResource(R.drawable.ic_edit)
-        ivIcon2.setImageResource(R.drawable.ic_delete)
+
+        if (!isMeetingCompleted(meetingData.status.toString())) {
+            ivIcon1.visibility = View.VISIBLE
+            ivIcon2.visibility = View.VISIBLE
+            ivIcon1.setImageResource(R.drawable.ic_edit)
+            ivIcon2.setImageResource(R.drawable.ic_delete)
+        }
+
         tvTitle.text = getString(R.string.meeting_details)
 
         ivBack.setOnClickListener {

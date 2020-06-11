@@ -938,6 +938,15 @@ class CommonMethod {
         }
 
 
+        fun isMeetingCompleted(status: String): Boolean {
+
+            if (status == "Completed") {
+                return true
+            }
+            return false
+        }
+
+
         fun getCompleteAddressString(
                 context: Context,
                 LATITUDE: Double,
@@ -1214,7 +1223,7 @@ class CommonMethod {
         }
 
 
-        fun shareOnMeeting(context: Context) {
+        fun shareOnMeeting(context: Activity) {
             try {
                 val meetingLink = "<a href=${meetingData.meetingLink}>${meetingData.meetingLink}</a>"
                 val subject = "Please join the meeting in progress : " + meetingData.topic
@@ -1226,11 +1235,47 @@ class CommonMethod {
                         "Note: You can directly join the meeting through the link and make sure to install the app on your device."
 
                 val sendIntent = Intent()
-                sendIntent.action = Intent.ACTION_SEND
+                sendIntent.action = Intent.ACTION_SENDTO
                 sendIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
                 sendIntent.putExtra(Intent.EXTRA_TEXT, text)
-                sendIntent.type = "text/html"
-                context.startActivity(Intent.createChooser(sendIntent, "Share Via : "))
+
+
+                val bottomSheetDialog = BottomSheetDialog(context)
+
+                val sheetView: View = context.layoutInflater.inflate(R.layout.share_layout, null)
+
+                bottomSheetDialog.setContentView(sheetView)
+
+                bottomSheetDialog.window!!.attributes.windowAnimations = R.style.dialog_animation
+
+
+                sheetView.layout_copy_url.setOnClickListener {
+                    val myClipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+                    val myClip = ClipData.newPlainText("text", meetingData.meetingLink)
+                    myClipboard?.setPrimaryClip(myClip!!)
+                    Toast.makeText(context, "Link Copied", Toast.LENGTH_SHORT).show();
+                }
+
+                sheetView.layout_message.setOnClickListener {
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.putExtra("sms_body", subject + "\n\n" + text)
+                        intent.data = Uri.parse("sms:")
+                        context.startActivity(intent)
+                    } catch (e: ActivityNotFoundException) {
+                        e.printStackTrace()
+                    }
+                }
+
+                sheetView.layout_email.setOnClickListener {
+                    sendIntent.type = "message/rfc822"
+                    sendIntent.data = Uri.parse("mailto:")
+                    context.startActivity(Intent.createChooser(sendIntent, "Share Via : "))
+                }
+
+                bottomSheetDialog.show()
+
+
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }

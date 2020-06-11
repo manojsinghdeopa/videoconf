@@ -105,7 +105,7 @@ public class SwipeController extends Callback {
                 int pos = viewHolder.getAdapterPosition();
 
                 try {
-                    isCompleted = Objects.requireNonNull(adapter.get(pos).getStatus()).equals("Completed");
+                    isCompleted = CommonMethod.Companion.isMeetingCompleted(Objects.requireNonNull(adapter.get(pos).getStatus()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

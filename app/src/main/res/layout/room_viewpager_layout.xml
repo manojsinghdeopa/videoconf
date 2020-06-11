@@ -2,8 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/pagerContainer"
     android:layout_marginTop="@dimen/_50sdp"
     android:layout_marginBottom="@dimen/_60sdp">
+
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/roomViewPager"
@@ -17,7 +19,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/_30sdp"
         android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"
+        android:visibility="gone" />
 
 
 </RelativeLayout>

@@ -27,6 +27,7 @@ import com.appypie.video.app.ui.joinMeeting.JoinMeetingViewModel
 import com.appypie.video.app.util.AppPrefs
 import com.appypie.video.app.util.CommonMethod
 import com.appypie.video.app.util.CommonMethod.Companion.displayOnlyDate
+import com.appypie.video.app.util.CommonMethod.Companion.isMeetingCompleted
 import com.appypie.video.app.util.Constants.*
 import com.appypie.video.app.util.SwipeController
 import com.appypie.video.app.util.SwipeControllerActions
@@ -114,7 +115,8 @@ class UserHomeFragment : BaseFragment() {
                 super.onLeftClicked(position)
 
                 try {
-                    if (meetingList[position].status == "Completed") {
+
+                    if (isMeetingCompleted(meetingList[position].status.toString())) {
                         return
                     }
 
@@ -132,7 +134,8 @@ class UserHomeFragment : BaseFragment() {
                 super.onRightClicked(position)
 
                 try {
-                    if (meetingList[position].status == "Completed") {
+
+                    if (isMeetingCompleted(meetingList[position].status.toString())) {
                         return
                     }
                     val builder = AlertDialog.Builder(requireActivity(), R.style.AppTheme_Dialog)
@@ -182,7 +185,7 @@ class UserHomeFragment : BaseFragment() {
 
                             list.clear()
                             it.data!!.forEach { meetingData ->
-                                if (meetingData.status != "Completed") {
+                                if (!isMeetingCompleted(meetingData.status.toString())) {
                                     list.add(meetingData)
                                 }
                             }

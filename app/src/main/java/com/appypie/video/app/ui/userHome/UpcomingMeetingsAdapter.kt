@@ -14,6 +14,7 @@ import com.appypie.video.app.ui.common.MeetingData
 import com.appypie.video.app.util.CommonMethod.Companion.convertDateToTime
 import com.appypie.video.app.util.CommonMethod.Companion.convertMinuteToHour
 import com.appypie.video.app.util.CommonMethod.Companion.formatTimeZone
+import com.appypie.video.app.util.CommonMethod.Companion.isMeetingCompleted
 import com.appypie.video.app.util.Constants.*
 import kotlinx.android.synthetic.main.upcoming_meeting_list_adapter.view.*
 import java.util.*
@@ -53,7 +54,7 @@ class UpcomingMeetingsAdapter(var list: MutableList<MeetingData>) : RecyclerView
         val status: String = list[position].status.toString()
 
         /*if (isPastDate(startDate)) {*/
-        if (status == "Completed") {
+        if (isMeetingCompleted(status)) {
             holder.itemView.btnStartUpcoming.textSize = 14f
             holder.itemView.btnStartUpcoming.background = null
             holder.itemView.btnStartUpcoming.setTextColor(context.resources.getColor(R.color.blueColor))
@@ -73,7 +74,6 @@ class UpcomingMeetingsAdapter(var list: MutableList<MeetingData>) : RecyclerView
     override fun getItemCount(): Int {
         return list.size
     }
-
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {

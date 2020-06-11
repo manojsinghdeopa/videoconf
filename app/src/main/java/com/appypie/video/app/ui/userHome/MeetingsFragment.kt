@@ -26,6 +26,7 @@ import com.appypie.video.app.ui.common.MeetingData
 import com.appypie.video.app.util.CommonMethod
 import com.appypie.video.app.util.CommonMethod.Companion.getCurrentDateWithoutDay
 import com.appypie.video.app.util.CommonMethod.Companion.getTomorrowDateWithoutDay
+import com.appypie.video.app.util.CommonMethod.Companion.isMeetingCompleted
 import com.appypie.video.app.util.Constants.*
 import com.appypie.video.app.util.SwipeController
 import com.appypie.video.app.util.SwipeControllerActions
@@ -234,7 +235,7 @@ class MeetingsFragment : BaseFragment() {
                 super.onLeftClicked(position)
 
                 try {
-                    if (meetingList[position].status == "Completed") {
+                    if (isMeetingCompleted(meetingList[position].status.toString())) {
                         return
                     }
 
@@ -252,9 +253,11 @@ class MeetingsFragment : BaseFragment() {
                 super.onRightClicked(position)
 
                 try {
-                    if (meetingList[position].status == "Completed") {
+
+                    if (isMeetingCompleted(meetingList[position].status.toString())) {
                         return
                     }
+
                     val builder = AlertDialog.Builder(requireActivity(), R.style.AppTheme_Dialog)
                     builder.setTitle(getString(R.string.delete_meeting_title))
                     builder.setMessage(getString(R.string.delete_meeting_text))

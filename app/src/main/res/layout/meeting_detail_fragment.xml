@@ -81,12 +81,12 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:visibility="gone"
         android:id="@+id/meetingDescriptionInput"
         style="@style/TextInputLayoutStyleUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp">
+        android:layout_margin="@dimen/_10sdp"
+        android:visibility="gone">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etMeetingDescription"
@@ -190,7 +190,6 @@
             android:layout_marginEnd="@dimen/_15sdp"
             app:srcCompat="@drawable/ic_copy" />
 
-
     </RelativeLayout>
 
 
@@ -209,6 +208,5 @@
         android:text="@string/add_invitee"
         android:textColor="@color/blueColor"
         android:textSize="@dimen/_12sdp" />
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>

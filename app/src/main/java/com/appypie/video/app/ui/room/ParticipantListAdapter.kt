@@ -9,6 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.appypie.video.app.R
+import com.appypie.video.app.util.Constants.meetingData
+import kotlinx.android.synthetic.main.participant_list_adapter.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -67,6 +69,12 @@ class ParticipantListAdapter(var list: MutableList<Item>) : RecyclerView.Adapter
         holder.ivThumb.background = draw
         holder.ivThumb.text = firstText
 
+        if (list[position].identity.trim() == meetingData.hostName!!.trim()) {
+            holder.itemView.tvType.text = "(Host)"
+            holder.itemView.tvType.visibility = View.VISIBLE
+        } else {
+            holder.itemView.tvType.visibility = View.GONE
+        }
 
     }
 

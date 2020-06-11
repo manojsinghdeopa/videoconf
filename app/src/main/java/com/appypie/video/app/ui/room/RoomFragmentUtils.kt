@@ -13,11 +13,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
+
 import com.appypie.video.app.R
 import com.appypie.video.app.ui.home.VideoRoomFragment
 import com.appypie.video.app.ui.home.VideoRoomInitializer
 import com.appypie.video.app.ui.room.RoomFragment.Companion.remoteParticipantsList
 import com.appypie.video.app.util.*
+import com.appypie.video.app.util.Constants.CURRENT_USER_NAME
 import com.appypie.video.app.util.Constants.meetingData
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.twilio.video.CameraCapturer
@@ -33,7 +35,7 @@ import kotlinx.android.synthetic.main.video_preview_bottom.view.*
 import java.util.*
 
 
-internal class RoomFragmentUtils() {
+class RoomFragmentUtils() {
 
     lateinit var activity: RoomFragment
     lateinit var roomView: RelativeLayout
@@ -155,12 +157,8 @@ internal class RoomFragmentUtils() {
         sheetView.tvParticipantId.text = meetingData.id
 
 
-        if (meetingData.description!!.isNotEmpty()) {
+        if (meetingData!!.description.isNotEmpty()) {
             sheetView.tvMeetingDescription.text = meetingData.description
-        }
-
-        sheetView.tvLink.setOnClickListener {
-            // CommonMethod.callBrowserIntent(activity.requireContext(), sheetView.tvLink.text.toString())
         }
 
     }
@@ -187,6 +185,7 @@ internal class RoomFragmentUtils() {
 
         dots[0]!!.setImageDrawable(ContextCompat.getDrawable(activity.requireActivity(), R.drawable.active_dot))
 
+
         roomView.roomViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 
@@ -202,7 +201,6 @@ internal class RoomFragmentUtils() {
                     return
                 }
 
-
                 for (i in 0 until dotscount) {
                     dots[i]!!.setImageDrawable(ContextCompat.getDrawable(activity.requireActivity(), R.drawable.non_active_dots))
                 }
@@ -213,6 +211,15 @@ internal class RoomFragmentUtils() {
         })
 
 
+    }
+
+    fun enableViewPager() {
+        roomView.sliderDots.visibility = View.VISIBLE
+    }
+
+
+    fun disableViewPager() {
+        roomView.sliderDots.visibility = View.GONE
     }
 
 
@@ -286,7 +293,7 @@ internal class RoomFragmentUtils() {
 
     private fun getParticipantList(): MutableList<Item> {
         val names = mutableListOf<Item>()
-        val myItem = Item(activity.localParticipantSid, "You", AppPrefs.getBoolean(Constants.AUDIO_MODE_OFF), !AppPrefs.getBoolean(Constants.VIDEO_MODE_OFF))
+        val myItem = Item(activity.localParticipantSid, CURRENT_USER_NAME, AppPrefs.getBoolean(Constants.AUDIO_MODE_OFF), !AppPrefs.getBoolean(Constants.VIDEO_MODE_OFF))
         names.add(0, myItem)
 
         remoteParticipantsList.forEach {

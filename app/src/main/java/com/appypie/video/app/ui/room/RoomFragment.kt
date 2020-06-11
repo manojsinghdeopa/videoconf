@@ -151,6 +151,8 @@ class RoomFragment : BaseFragment(), VideoRoomInitializer, ParticipantClickListe
     }
 
 
+    lateinit var roomFragmentUtils: RoomFragmentUtils
+
     override fun layoutRes(): Int {
         return R.layout.activity_room
     }
@@ -175,9 +177,13 @@ class RoomFragment : BaseFragment(), VideoRoomInitializer, ParticipantClickListe
         requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
         ButterKnife.bind(requireActivity())
 
+
         // Cache volume control stream
         savedVolumeControlStream = requireActivity().volumeControlStream
-        RoomFragmentUtils(roomFragment!!, roomView!!).loadViewPager(this)
+
+
+        roomFragmentUtils = RoomFragmentUtils(roomFragment!!, roomView!!)
+        roomFragmentUtils.loadViewPager(this)
 
     }
 
@@ -377,9 +383,15 @@ class RoomFragment : BaseFragment(), VideoRoomInitializer, ParticipantClickListe
             }
 
             if (room!!.remoteParticipants.isEmpty()) {
+
+                roomFragmentUtils.disableViewPager()
+
                 participantController!!.thumbsViewContainer.visibility = View.GONE
                 participantController!!.renderAsPrimary(localParticipantSid, "You", cameraVideoTrack, localAudioTrack == null, mirror)
             } else {
+
+                roomFragmentUtils.enableViewPager()
+
                 remoteParticipantsList = room!!.remoteParticipants
                 participantController!!.addThumb(
                         localParticipantSid,
@@ -588,7 +600,9 @@ class RoomFragment : BaseFragment(), VideoRoomInitializer, ParticipantClickListe
         val muted = remoteParticipant.remoteAudioTracks.size <= 0 || !remoteParticipant.remoteAudioTracks[0].isTrackEnabled
         val remoteVideoTrackPublications = remoteParticipant.remoteVideoTracks
         if (remoteVideoTrackPublications.isEmpty()) {
-            participantListener!!.controlParticipant(remoteParticipant, true)
+
+                participantListener!!.controlParticipant(remoteParticipant, true)
+
             addParticipantVideoTrack(remoteParticipant, muted, null, renderAsPrimary)
         } else {
             for (remoteVideoTrackPublication in remoteVideoTrackPublications) {

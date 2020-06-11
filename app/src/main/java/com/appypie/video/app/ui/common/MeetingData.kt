@@ -51,7 +51,7 @@ class MeetingData {
 
     @SerializedName("description")
     @Expose
-    var description: String? = null
+    var description: String = ""
 
     @SerializedName("start_date")
     @Expose

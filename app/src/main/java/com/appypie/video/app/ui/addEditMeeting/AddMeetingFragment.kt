@@ -201,7 +201,7 @@ class AddMeetingFragment : BaseFragment() {
             tvTitle.text = getString(R.string.edit_meeting)
             etMeetingTopic.setText(meetingData!!.topic)
 
-            if (meetingData!!.description!!.isNotEmpty()) {
+            if (meetingData!!.description.isNotEmpty()) {
                 etMeetingDescription.setText(meetingData!!.description)
             }
 
